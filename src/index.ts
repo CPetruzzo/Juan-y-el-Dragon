@@ -36,17 +36,19 @@ window.dispatchEvent(new Event ("resize"));
 Loader.shared.add({url: "./MAXIM2.png", name:"Maxim"});
 Loader.shared.add({url: "./suelo.png", name:"Suelo"});
 Loader.shared.add({url: "./clampy.png", name:"myClampy"});
+Loader.shared.add({url: "./cielo.png", name:"Cielo"});
 
 Loader.shared.onComplete.add(()=>{
 
 	const clampy: Sprite = Sprite.from("Maxim");
 	const piso: Sprite = Sprite.from("Suelo");
+	const sky: Sprite = Sprite.from("Cielo");
 
 	console.log("Hola mundo!", clampy.height , clampy.width);
 	
 	clampy.anchor.set(0);
 	piso.anchor.set(0);
-	
+	sky.anchor.set(0);
 	
 	clampy.x = app.screen.width / 2.3;
 	clampy.y = app.screen.height / 1.7;
@@ -54,6 +56,10 @@ Loader.shared.onComplete.add(()=>{
 	piso.x = app.screen.width / 8;
 	piso.y = app.screen.height / 10;
 
+	sky.x = app.screen.width / 1200;
+	sky.y = app.screen.height / 3000;
+
+	app.stage.addChild(sky);
 	app.stage.addChild(piso);
 	app.stage.addChild(clampy);
 

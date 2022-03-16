@@ -9,16 +9,16 @@ const app = new Application({
 	height: 480
 });
 
-Loader.shared.add({url: "./proyect.png", name:"myProyect"});
+Loader.shared.add({url: "./MAXIM2.png", name:"Maxim"});
 Loader.shared.add({url: "./clampy.png", name:"myClampy"});
 
 Loader.shared.onComplete.add(()=>{
 
-	const clampy: Sprite = Sprite.from("myProyect");
+	const clampy: Sprite = Sprite.from("Maxim");
 
 	console.log("Hola mundo!", clampy.height , clampy.width);
 	
-	clampy.anchor.set(0.5);
+	clampy.anchor.set(0);
 	
 	clampy.x = app.screen.width / 2;
 	clampy.y = app.screen.height / 2;

@@ -48,7 +48,7 @@ Loader.shared.onComplete.add(()=>{
 	
 	clampy.anchor.set(0);
 	piso.anchor.set(0);
-	sky.anchor.set(0);
+	sky.anchor.set(0.4);
 	
 	clampy.x = app.screen.width / 2.3;
 	clampy.y = app.screen.height / 1.7;

@@ -48,10 +48,10 @@ Loader.shared.onComplete.add(()=>{
 	piso.anchor.set(0);
 	
 	
-	clampy.x = app.screen.width / 3;
+	clampy.x = app.screen.width / 2.3;
 	clampy.y = app.screen.height / 1.7;
 	
-	piso.x = app.screen.width / 10;
+	piso.x = app.screen.width / 8;
 	piso.y = app.screen.height / 10;
 
 	app.stage.addChild(piso);

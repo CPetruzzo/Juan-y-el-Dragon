@@ -1,4 +1,6 @@
-import { Application, Container, Loader, Point, Sprite } from 'pixi.js'
+import { Application, Loader, Sprite } from 'pixi.js'
+import { assets } from './assets';
+import { CieloTierra } from './CieloTierra';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -30,50 +32,25 @@ window.addEventListener("resize", ()=>{
 	app.view.style.marginTop = marginVertical + "px";
 	app.view.style.marginBottom = marginVertical + "px";
 });
-
 window.dispatchEvent(new Event ("resize"));
 
-Loader.shared.add({url: "./MAXIM2.png", name:"Maxim"});
-Loader.shared.add({url: "./suelo.png", name:"Suelo"});
-Loader.shared.add({url: "./clampy.png", name:"myClampy"});
-Loader.shared.add({url: "./cielo.png", name:"Cielo"});
+Loader.shared.add(assets);
 
 Loader.shared.onComplete.add(()=>{
 
 	const maxim: Sprite = Sprite.from("Maxim");
-	const piso: Sprite = Sprite.from("Suelo");
-	const sky: Sprite = Sprite.from("Cielo");
 
-	console.log("Hola mundo!", maxim.height , maxim.width);
-	
-	//esto sería como el eje//
 	maxim.anchor.set(0);
-	piso.anchor.set(0);
-	sky.anchor.set(0.4);
-	
 	maxim.x = app.screen.width / 2.4;
 	maxim.y = app.screen.height / 1.65;
-	
 	maxim.scale.x=1.5
 	maxim.scale.y=1.5
+
 	// también podría poner maxim.position.set(numero, numero); 
 	// o sino maxim.scale.set(numero, numero);
 
-	piso.x = app.screen.width / 1280;
-	piso.y = app.screen.height / 700;
-
-	piso.scale.x=1.34
-	piso.scale.y=1.34
-
-	sky.x = app.screen.width / 1280;
-	sky.y = app.screen.height / 700;
-
 	// para hacer un paquete cielo y tierra en este caso, creo el container
-	const fondo: Container = new Container();
-	fondo.addChild(sky);
-	fondo.addChild(piso);
-
-	console.log(maxim.toGlobal(new Point()));
+	const fondo: CieloTierra = new CieloTierra();
 
 	// al final solo agrego lo que sería el fondo y mi personaje
 	app.stage.addChild(fondo);

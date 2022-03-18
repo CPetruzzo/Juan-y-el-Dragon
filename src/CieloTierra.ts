@@ -1,6 +1,5 @@
 import { Container, Sprite } from "pixi.js";
 
-
 // CieloTierra hereda de Container, pero no llamé todavía al constructor padre de Container
 export class CieloTierra extends Container{
     constructor(){

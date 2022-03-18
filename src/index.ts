@@ -1,6 +1,7 @@
-import { Application, Loader, Sprite } from 'pixi.js'
+import { Application, Loader} from 'pixi.js'
 import { assets } from './assets';
 import { CieloTierra } from './CieloTierra';
+import { Personaje } from './Personajes';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -37,25 +38,10 @@ window.dispatchEvent(new Event ("resize"));
 Loader.shared.add(assets);
 
 Loader.shared.onComplete.add(()=>{
-
-	const maxim: Sprite = Sprite.from("Maxim");
-
-	maxim.anchor.set(0);
-	maxim.x = app.screen.width / 2.4;
-	maxim.y = app.screen.height / 1.65;
-	maxim.scale.x=1.5
-	maxim.scale.y=1.5
-
-	// también podría poner maxim.position.set(numero, numero); 
-	// o sino maxim.scale.set(numero, numero);
-
-	// para hacer un paquete cielo y tierra en este caso, creo el container
 	const fondo: CieloTierra = new CieloTierra();
-
-	// al final solo agrego lo que sería el fondo y mi personaje
+	const maxim: Personaje = new Personaje();
 	app.stage.addChild(fondo);
 	app.stage.addChild(maxim);
-
 })
 
 Loader.shared.load();

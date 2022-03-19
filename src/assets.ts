@@ -1,4 +1,4 @@
-// en lugar de cargar todos con cada loader, usamos un assets
+// en lugar de cargar todos con cada
 // Loader.shared.add({url: "./MAXIM2.png", name:"Maxim"});
 // Loader.shared.add({url: "./suelo.png", name:"Suelo"});
 // Loader.shared.add({url: "./clampy.png", name:"myClampy"});
@@ -8,5 +8,8 @@ export const assets = [
     {url: "./MAXIM2.png", name:"Maxim"},
     {url: "./suelo.png", name:"Suelo"},
     {url: "./clampy.png", name:"myClampy"},
-    {url: "./cielo.png", name:"Cielo"}
+    {url: "./cielo.png", name:"Cielo"},
+    {url: "./MAXIMTRANSPARENTE1.png", name:"MaximRun1"},
+    {url: "./MAXIMTRANSPARENTE2.png", name:"MaximRun2"},
+    {url: "./burbuja.png", name:"Dialogo"},
 ]

@@ -1,6 +1,6 @@
 import { AnimatedSprite, Container, Sprite, Text, Texture } from "pixi.js";
 import { CieloTierra } from "./CieloTierra";
-import {Cartel} from "./Cartel";
+import { Cartel } from "./Cartel";
 
 export class Scene extends Container{
     constructor(){

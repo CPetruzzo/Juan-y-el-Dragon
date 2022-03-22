@@ -18,5 +18,4 @@ export const assets = [
     {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/musicOff.png", name:"MusicOff"},
     {url: "gameicons-expansion/Game-icons-(base)/PNG/Black/2x/buttonStart.png", name:"Start"},
     {url: "gameicons-expansion/Game-icons-(base)/PNG/Black/2x/cross.png", name:"Cross"}
-
 ]

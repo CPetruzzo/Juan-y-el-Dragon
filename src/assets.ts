@@ -12,4 +12,11 @@ export const assets = [
     {url: "./MAXIMTRANSPARENTE1.png", name:"MaximRun1"},
     {url: "./MAXIMTRANSPARENTE2.png", name:"MaximRun2"},
     {url: "./burbuja.png", name:"Dialogo"},
+    {url: "uipack-space/PNG/metalPanel_blueCorner.png", name:"PanelBlue"},
+    {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/wrench.png", name:"Config"},
+    {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/save.png", name:"Save"},
+    {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/musicOff.png", name:"MusicOff"},
+    {url: "gameicons-expansion/Game-icons-(base)/PNG/Black/2x/buttonStart.png", name:"Start"},
+    {url: "gameicons-expansion/Game-icons-(base)/PNG/Black/2x/cross.png", name:"Cross"}
+
 ]

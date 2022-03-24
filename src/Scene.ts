@@ -13,15 +13,15 @@ export class Scene extends Container{
             dialogo.position.set(650,280)
     
         const maximCaminando: AnimatedSprite = new AnimatedSprite([
-                Texture.from("MaximRun1"),
-                Texture.from("MaximRun2")
+                Texture.from("maxim1.png"),
+                Texture.from("maxim2.png"),
                 ], 
                 true
                 );
                 maximCaminando.play();
                 maximCaminando.animationSpeed=0.1;
-                maximCaminando.scale.set(0.3,0.3);
-                maximCaminando.position.set(350,350);
+                maximCaminando.scale.set(4);
+                maximCaminando.position.set(600,450);
 
         const myText: Text = new Text("texto", {fontSize:50, fill:0xF00, fontFamily:"Arial"});
             myText.text = "Soy Maxim!";
@@ -32,9 +32,10 @@ export class Scene extends Container{
         cartel.position.set(440,30)
         
         this.addChild(CieloyTierra); 
-        this.addChild(maximCaminando);
+
         this.addChild(dialogo);
         this.addChild(myText);
-        this.addChild(cartel);   
-    }
+        this.addChild(cartel);  
+        this.addChild(maximCaminando);
+     }
 }

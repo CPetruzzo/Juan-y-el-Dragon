@@ -16,7 +16,10 @@ export const assets = [
     {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/wrench.png", name:"Config"},
     {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/save.png", name:"Save"},
     {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/musicOff.png", name:"MusicOff"},
+    {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/musicOn.png", name:"MusicOn"},
     {url: "gameicons-expansion/Game-icons-(base)/PNG/Black/2x/buttonStart.png", name:"Start"},
+    {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/buttonStart.png", name:"StartW"},
     {url: "gameicons-expansion/Game-icons-(base)/PNG/Black/2x/cross.png", name:"Cross"},
-    {url: "./spritesheet.json", name:"MaxMov"}
+    {url: "./spritesheet.json", name:"MaxMov"},
+    {url: "./uipack-rpg/PNG/cursorGauntlet_grey.png", name:"Guante"},
 ]

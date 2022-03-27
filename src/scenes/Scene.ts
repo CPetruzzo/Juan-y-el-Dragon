@@ -37,5 +37,6 @@ export class Scene extends Container{
         this.addChild(myText);
         this.addChild(cartel);  
         this.addChild(maximCaminando);
+        
      }
 }

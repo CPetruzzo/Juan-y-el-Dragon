@@ -1,6 +1,5 @@
 import { AnimatedSprite, Container, Sprite, Text, Texture } from "pixi.js";
 import { CieloTierra } from "./CieloTierra";
-import { Cartel } from "./Cartel";
 
 export class Scene extends Container{
     constructor(){
@@ -27,15 +26,10 @@ export class Scene extends Container{
             myText.text = "Soy Maxim!";
             myText.position.set(700,330);
             myText.scale.set(0.6,0.6)
-            
-        const cartel: Cartel = new Cartel ();
-        cartel.position.set(440,30)
         
         this.addChild(CieloyTierra); 
-
         this.addChild(dialogo);
         this.addChild(myText);
-        this.addChild(cartel);  
         this.addChild(maximCaminando);
         
      }

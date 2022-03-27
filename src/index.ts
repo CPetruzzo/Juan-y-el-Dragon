@@ -1,6 +1,7 @@
 import { Application, Loader} from 'pixi.js'
 import { assets } from './assets';
 import { UIDemo } from './scenes/UIDemo';
+import { Scene } from './scenes/Scene';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -37,6 +38,8 @@ window.dispatchEvent(new Event ("resize"));
 Loader.shared.add(assets);
 
 Loader.shared.onComplete.add(()=>{
+	const myScene = new Scene();
+	app.stage.addChild(myScene);
 	const myDemo = new UIDemo();
 	app.stage.addChild(myDemo);
 })

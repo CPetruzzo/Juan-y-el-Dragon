@@ -1,7 +1,9 @@
-import { Application, Loader} from 'pixi.js'
+import { Application, Loader, Ticker} from 'pixi.js'
 import { assets } from './assets';
 import { UIDemo } from './scenes/UIDemo';
 import { Scene } from './scenes/Scene';
+import { Keyboard } from './utils/Keyboard';
+import { Ataque } from './scenes/EscenaClase5';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -12,6 +14,7 @@ const app = new Application({
 	height: 720
 });
 
+Keyboard.initialize(); /* lo llamo una vez y nunca mas */
 window.addEventListener("resize", ()=>{
 	console.log("resized!");
 	const scaleX= window.innerWidth / app.screen.width;
@@ -42,6 +45,14 @@ Loader.shared.onComplete.add(()=>{
 	app.stage.addChild(myScene);
 	const myDemo = new UIDemo();
 	app.stage.addChild(myDemo);
+	const attack = new Ataque();
+	app.stage.addChild(attack);
+	Ticker.shared.add(
+		function(deltaFrame)
+		{
+		attack.update(Ticker.shared.deltaMS,deltaFrame);
+		}
+	);
 })
 
 Loader.shared.load();

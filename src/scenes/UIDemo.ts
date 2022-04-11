@@ -1,5 +1,6 @@
-import { Container, Sprite, Texture } from "pixi.js";
+import { Container, Sprite, Text, Texture } from "pixi.js";
 import { Button } from "../ui/Button";
+import { Keyboard } from "../utils/Keyboard";
 import { Cartel } from "./Cartel";
 
 export class UIDemo extends Container{
@@ -7,14 +8,18 @@ export class UIDemo extends Container{
     /* private buttonMouse: Sprite; */
     private buttonMouse: Button;
     private buttonSound: Sprite;
+    private lastKeyPressed: Text;
 
     constructor(){
         super();
             
-        /* CARTEL:                 AGREGANDO EL CARTEL A LA PANTALLA*/
+        //  CARTEL:                 AGREGANDO EL CARTEL A LA PANTALLA
         const cartel: Cartel = new Cartel ();
-        cartel.position.set(440,260)
-        
+        cartel.position.set(440,260);          
+        const dialog = new Container();
+        dialog.x=100;
+        dialog.y=50;
+
         { /* START:                 ANTES ERA ASÍ (NO ERA UN "THIS")  -------- 
         PERO PARA PODER HACER QUE SEA UN "OBJETO" 
         Y PODER CAMBIARLE LA IMAGEN CUANDO APRIETO Y CUANDO NO
@@ -31,10 +36,12 @@ export class UIDemo extends Container{
         { /* START:                 COMO QUEDÓ EL BOTON DE START AL FINAL*/
         this.buttonMouse = new Button(Texture.from("Start"),
         Texture.from("StartW"), 
-        Texture.from("Start"), 
-        this.onButtonClick.bind(this))
-        this.buttonMouse.x= cartel.width + 235 
+        Texture.from("Start"));
+        this.buttonMouse.x= cartel.width + 235
         this.buttonMouse.y = cartel.height + 205
+        this.buttonMouse.on("buttonClick", this.onButtonClick, this);
+        /*this.onButtonClick.bind(this))  le saco el bind y el renglon además voy a Button.ts y le saco todos los callbacks */
+        
         /* TODO ESTO SE VA PORQUE AHORA ESTÁ DENTRO DEL ARCHIVO BUTTON.TS
         this.buttonMouse.anchor.set(0.5); 
         this.buttonMouse.on("mousedown", this.onMouseDown, this)
@@ -53,7 +60,7 @@ export class UIDemo extends Container{
         buttonTouch.on("touchoff", this.onTouchUp, this)
         buttonTouch.interactive=true
         }
-        
+
         { /* POINTER:               ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA CLICKEAR CON TOUCH O MOUSE */
         const buttonPointer = Sprite.from("Start");
         buttonPointer.anchor.set(0.5);
@@ -72,18 +79,39 @@ export class UIDemo extends Container{
         this.buttonSound.y = cartel.height + 45
         this.buttonSound.on("mousedown", this.onSoundDown, this)
         this.buttonSound.interactive=true
+        this.buttonSound.buttonMode=true
         this.buttonSound.on("mouseover",this.onSoundOver, this)
         this.buttonSound.on("mouseout",this.onSoundOut, this)
         }
+        
+        {   //TEXTO
+            this.lastKeyPressed=new Text("Stage 1", {fontSize:40, fontFamily:("Arial")});
+            this.lastKeyPressed.anchor.set(0.5);
+            this.lastKeyPressed.x= cartel.width + 135
+            this.lastKeyPressed.y= cartel.height + 85   
+            dialog.addChild(this.lastKeyPressed);
+        }
 
-        { /* ADD.CHILD:             AGREGANDO TODO CON ADDCHILDS */
-        this.addChild(cartel); 
+        {//TECLADO - esto ahora está dentro de Keyboard.ts
+        //document.addEventListener("keydown",this.onKeyDown.bind(this));
+        //document.addEventListener("keyup",this.onKeyUp.bind(this)) */
+        }
+        
+        
+        { // ADD.CHILD:             AGREGANDO TODO CON ADDCHILDS
+        this.addChild(cartel);
         this.addChild(this.buttonSound);
         this.addChild(this.buttonMouse);
-        /* this.addChild(buttonTouch); */ /*ESTE ES EL BOTÓN PARA CONTROL CON TOUCH PAD */
-        /* this.addChild(buttonPointer); */ /* ESTE ES UN BOTON QUE USA TODO LO DECLARADO EN ESTE CASO TOUCH PAD Y MOUSE */
+        this.addChild(dialog);
+        //this.addChild(buttonTouch);  // ESTE ES EL BOTÓN PARA CONTROL CON TOUCH PAD */
+        //this.addChild(buttonPointer);  // ESTE ES UN BOTON QUE USA TODO LO DECLARADO EN ESTE CASO TOUCH PAD Y MOUSE */
+        Keyboard.down.on("KeyB", this.onKeyB, this); // CON ESTAS DOS FUNCIONES UNO PUEDE APRETAR UN BOTON Y NO
+        Keyboard.up.on("KeyB", this.onKeyBUp, this); // APARECE MIL VECES, SINO QUE APRETAS Y HASTA QUE NO SOLTAS NO VUELVE A MARCAR NADA
         } 
     }
+
+    private onKeyB(): void{     console.log("apreté la B!", this)   }
+    private onKeyBUp(): void{   console.log("solté la B!", this)    }
 
     /* MOUSE-CLICK-ANTES:           (PARA QUE EL MOUSE HAGA CLICK COMO LO TENÍA ANTES DE CREAR EL "BUTTON.TS" 
     private onMouseDown():void {
@@ -92,6 +120,18 @@ export class UIDemo extends Container{
     private onMouseUp():void {
         console.log("Pasaron cosas");
     this.buttonMouse.texture=Texture.from("Start");   } */
+    
+    /*EVENTOS QUE ME AVISAN QUE PASA CON EL TECLADO
+    //private onKeyDown(event:KeyboardEvent):void {
+        console.log("key pressed", event.code);
+        this.lastKeyPressed.text=event.code;
+        if (event.code =="KeyA"){
+            console.log("apretamos la A")
+        }
+    }
+    private onKeyUp(event:KeyboardEvent):void {
+        console.log("key released", event.code);
+    }*/
     
     /* PARA QUE EL MOUSE DEL TOUCHPAD HAGA CLICK */
     private onTouchDown():void {console.log("touch down");   }
@@ -117,13 +157,15 @@ export class UIDemo extends Container{
             this.buttonSound.texture=Texture.from("MusicOn"); }
     }
 
-    /* PARA QUE SE DE CUENTA QUE LE PASO POR ARRIBA DEL SONIDO */
+    // PARA QUE SE DE CUENTA QUE LE PASO POR ARRIBA DEL SONIDO 
     private onSoundOver():void { console.log("mouse over the sound icon");   }
     private onSoundOut():void { console.log("mouse out of the sound icon");   }
 
-    /* ---------------------------------------------------------------------------------------*/
-    /* BUTTON.TS            HACER FUNCIONAR EL NUEVO BOTÓN */ 
+    //BUTTON.TS            HACER FUNCIONAR EL NUEVO BOTÓN  
     private onButtonClick():void{
-        console.log("Start", this);
+        console.log("Apreté start", this);
     }
+
+    
 }
+

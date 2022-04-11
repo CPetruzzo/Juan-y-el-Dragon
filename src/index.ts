@@ -51,8 +51,8 @@ Loader.shared.onComplete.add(()=>{
 		function(deltaFrame)
 		{
 		attack.update(Ticker.shared.deltaMS,deltaFrame);
-		}
-	);
+		;})
+	
 })
 
 Loader.shared.load();

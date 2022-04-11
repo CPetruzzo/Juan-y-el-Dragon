@@ -1,5 +1,6 @@
-import { Container, Sprite, Text, Texture } from "pixi.js";
+import { Container, InteractionEvent, Sprite, Text, Texture } from "pixi.js";
 import { Button } from "../ui/Button";
+import { ToggleButton } from "../ui/ToggleButton";
 import { Keyboard } from "../utils/Keyboard";
 import { Cartel } from "./Cartel";
 
@@ -7,18 +8,25 @@ export class UIDemo extends Container{
     
     /* private buttonMouse: Sprite; */
     private buttonMouse: Button;
-    private buttonSound: Sprite;
+    private buttonSound: ToggleButton;
     private lastKeyPressed: Text;
+    private dragging:boolean=false;
+    private cartel: Cartel;
+    
 
     constructor(){
         super();
             
         //  CARTEL:                 AGREGANDO EL CARTEL A LA PANTALLA
-        const cartel: Cartel = new Cartel ();
-        cartel.position.set(440,260);          
+        this.cartel = new Cartel ();
+        this.cartel.position.set(445,260);      
+        this.cartel.interactive=true;
         const dialog = new Container();
         dialog.x=100;
         dialog.y=50;
+        this.cartel.on("mousedown", this.beginDrag, this);
+        this.cartel.on("mouseup", this.endDrag, this);
+        this.cartel.on("mousemove", this.moveDrag, this);
 
         { /* START:                 ANTES ERA ASÍ (NO ERA UN "THIS")  -------- 
         PERO PARA PODER HACER QUE SEA UN "OBJETO" 
@@ -37,11 +45,14 @@ export class UIDemo extends Container{
         this.buttonMouse = new Button(Texture.from("Start"),
         Texture.from("StartW"), 
         Texture.from("Start"));
-        this.buttonMouse.x= cartel.width + 235
-        this.buttonMouse.y = cartel.height + 205
+        this.buttonMouse.x= this.cartel.width + 235
+        this.buttonMouse.y = this.cartel.height + 205
+        this.buttonMouse.on("mousedown", this.beginDrag, this);
+        this.buttonMouse.on("mouseup", this.endDrag, this);
+        this.buttonMouse.on("mousemove", this.moveDrag, this);
         this.buttonMouse.on("buttonClick", this.onButtonClick, this);
+
         /*this.onButtonClick.bind(this))  le saco el bind y el renglon además voy a Button.ts y le saco todos los callbacks */
-        
         /* TODO ESTO SE VA PORQUE AHORA ESTÁ DENTRO DEL ARCHIVO BUTTON.TS
         this.buttonMouse.anchor.set(0.5); 
         this.buttonMouse.on("mousedown", this.onMouseDown, this)
@@ -54,8 +65,8 @@ export class UIDemo extends Container{
         { /* TOUCHPAD:              ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA EL TOUCHPAD */
         const buttonTouch = Sprite.from("Start");
         buttonTouch.anchor.set(0.5);
-        buttonTouch.x= cartel.width + 115 
-        buttonTouch.y = cartel.height + 205
+        buttonTouch.x= this.cartel.width + 115 
+        buttonTouch.y = this.cartel.height + 205
         buttonTouch.on("touchstart", this.onTouchDown, this)
         buttonTouch.on("touchoff", this.onTouchUp, this)
         buttonTouch.interactive=true
@@ -64,31 +75,42 @@ export class UIDemo extends Container{
         { /* POINTER:               ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA CLICKEAR CON TOUCH O MOUSE */
         const buttonPointer = Sprite.from("Start");
         buttonPointer.anchor.set(0.5);
-        buttonPointer.x= cartel.width + 355
-        buttonPointer.y = cartel.height + 205
+        buttonPointer.x= this.cartel.width + 355
+        buttonPointer.y = this.cartel.height + 205
         buttonPointer.on("pointerdown", this.onPointerDown, this)
         buttonPointer.on("pointerup", this.onPointerUp, this)
         buttonPointer.interactive=true
         }
      
-        { /* MUSIC ON & OFF:        ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA EL MUSIC ON-OFF */  
+        { /* MUSIC ON & OFF:        ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA EL MUSIC ON-OFF           
         this.buttonSound = Sprite.from("MusicOn");
         this.buttonSound.anchor.set(0.5);
         this.buttonSound.scale.set(0.5);
-        this.buttonSound.x= cartel.width + 215
-        this.buttonSound.y = cartel.height + 45
+        this.buttonSound.x= this.cartel.width + 215
+        this.buttonSound.y = this.cartel.height + 45
         this.buttonSound.on("mousedown", this.onSoundDown, this)
         this.buttonSound.interactive=true
         this.buttonSound.buttonMode=true
         this.buttonSound.on("mouseover",this.onSoundOver, this)
-        this.buttonSound.on("mouseout",this.onSoundOut, this)
+        this.buttonSound.on("mouseout",this.onSoundOut, this) */
         }
-        
+        this.buttonSound = new ToggleButton(
+        Texture.from("MusicOff"), 
+        Texture.from("MusicOn"));
+        this.buttonSound.height=55;
+        this.buttonSound.width=55;
+        this.buttonSound.x= this.cartel.width + 215
+        this.buttonSound.y = this.cartel.height + 45
+        this.buttonSound.on("buttonClick", this.onButtonClick, this);
+        this.buttonSound.on(ToggleButton.TOGGLE_EVENT, (newState) => {
+            console.log("toggle changed to:", newState)
+        })
+
         {   //TEXTO
             this.lastKeyPressed=new Text("Stage 1", {fontSize:40, fontFamily:("Arial")});
             this.lastKeyPressed.anchor.set(0.5);
-            this.lastKeyPressed.x= cartel.width + 135
-            this.lastKeyPressed.y= cartel.height + 85   
+            this.lastKeyPressed.x= this.cartel.width + 135
+            this.lastKeyPressed.y= this.cartel.height + 85   
             dialog.addChild(this.lastKeyPressed);
         }
 
@@ -97,9 +119,8 @@ export class UIDemo extends Container{
         //document.addEventListener("keyup",this.onKeyUp.bind(this)) */
         }
         
-        
         { // ADD.CHILD:             AGREGANDO TODO CON ADDCHILDS
-        this.addChild(cartel);
+        this.addChild(this.cartel);
         this.addChild(this.buttonSound);
         this.addChild(this.buttonMouse);
         this.addChild(dialog);
@@ -147,7 +168,38 @@ export class UIDemo extends Container{
     private onMouseOut():void {
     console.log("mouse out");   } */
     
-    /* PARA QUE SE TACHE Y DESTACHE EL SONIDO */
+    private beginDrag() {
+        this.dragging = true;
+        console.log(this)
+    }
+
+    private moveDrag(e:InteractionEvent) {
+        if(this.dragging)
+        {
+            const newPos = e.data.getLocalPosition(this.buttonMouse.parent);
+            this.buttonMouse.x = newPos.x +185;
+            this.buttonMouse.y = newPos.y +180;
+
+            const newPos2 = e.data.getLocalPosition(this.lastKeyPressed.parent);
+            this.lastKeyPressed.x = newPos2.x +185;
+            this.lastKeyPressed.y = newPos2.y +100;
+
+            const newPosMsc = e.data.getLocalPosition(this.buttonMouse.parent);
+            this.buttonSound.x = newPosMsc.x +155;
+            this.buttonSound.y = newPosMsc.y +15;
+
+            const newPosParent = e.data.getLocalPosition(this.cartel.parent);
+            this.cartel.x = newPosParent.x-20;
+            this.cartel.y = newPosParent.y-20;
+        }
+    }
+
+    private endDrag():void {
+        this.dragging = false;
+    }
+
+
+    /* PARA QUE SE TACHE Y DESTACHE EL SONIDO
     private onSoundDown():void {
         if (this.buttonSound.texture===Texture.from("MusicOn")) {
                 console.log("silencio");
@@ -155,17 +207,15 @@ export class UIDemo extends Container{
             else  {  
                 console.log("sonido de vuelta");
             this.buttonSound.texture=Texture.from("MusicOn"); }
-    }
+    }*/
 
-    // PARA QUE SE DE CUENTA QUE LE PASO POR ARRIBA DEL SONIDO 
+    /* PARA QUE SE DE CUENTA QUE LE PASO POR ARRIBA DEL SONIDO 
     private onSoundOver():void { console.log("mouse over the sound icon");   }
-    private onSoundOut():void { console.log("mouse out of the sound icon");   }
+    private onSoundOut():void { console.log("mouse out of the sound icon");   }*/
 
     //BUTTON.TS            HACER FUNCIONAR EL NUEVO BOTÓN  
     private onButtonClick():void{
         console.log("Apreté start", this);
     }
-
-    
 }
 

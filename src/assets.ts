@@ -21,6 +21,7 @@ export const assets = [
     {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/buttonStart.png", name:"StartW"},
     {url: "gameicons-expansion/Game-icons-(base)/PNG/Black/2x/cross.png", name:"Cross"},
     {url: "./spritesheet.json", name:"MaxMov"},
+    {url: "./spritesheet (1).json", name:"Juan"},
     {url: "./uipack-rpg/PNG/cursorGauntlet_grey.png", name:"Guante"},
     {url: "maps/casita.json", name:"Casa"},
 ]

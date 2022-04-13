@@ -1,9 +1,10 @@
-import { Application, Loader, Ticker} from 'pixi.js'
+import { Application, Loader, /*Ticker*/} from 'pixi.js'
 import { assets } from './assets';
-import { UIDemo } from './scenes/UIDemo';
-import { Scene } from './scenes/Scene';
+///import { UIDemo } from './scenes/UIDemo';
+//import { Scene } from './scenes/Scene';
 import { Keyboard } from './utils/Keyboard';
-import { Ataque } from './scenes/EscenaClase5';
+//import { Ataque } from './scenes/EscenaClase5';
+import { Warrior } from './scenes/Juan';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -41,7 +42,7 @@ window.dispatchEvent(new Event ("resize"));
 Loader.shared.add(assets);
 
 Loader.shared.onComplete.add(()=>{
-	const myScene = new Scene();
+	/*const myScene = new Scene();
 	app.stage.addChild(myScene);
 	const myDemo = new UIDemo();
 	app.stage.addChild(myDemo);
@@ -51,8 +52,9 @@ Loader.shared.onComplete.add(()=>{
 		function(deltaFrame)
 		{
 		attack.update(Ticker.shared.deltaMS,deltaFrame);
-		;})
-	
+		;})*/
+	const juancito = new Warrior();
+	app.stage.addChild(juancito);
 })
 
 Loader.shared.load();

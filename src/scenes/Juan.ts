@@ -14,8 +14,8 @@ export class Warrior extends Container{
                 );
                 juan.play();
                 juan.animationSpeed=0.1;
-                juan.scale.set(2);
-                juan.position.set(500,100);
+                juan.scale.set(0.8);
+                juan.position.set(900,400);
         
         this.addChild(juan);
      }

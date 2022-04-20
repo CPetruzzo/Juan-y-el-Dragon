@@ -7,6 +7,8 @@ import { Keyboard } from "../utils/Keyboard";
 export class Ataque extends Container implements IUpdateable{
 
     private AtaqueDeMaxim: AnimatedSprite;
+    public speed: number = 500;
+
     constructor(){
         super();
         
@@ -28,35 +30,37 @@ export class Ataque extends Container implements IUpdateable{
        */
     }
     //no dice ni public ni nada pero es public, si quiero le pongo
-    update(_deltaTime: number, deltaFrame: number): void {
+    update(deltaTime: number, deltaFrame: number): void {
         
         deltaFrame=deltaFrame*0.2;
+
         //Para moverme hacia abajo
-        this.AtaqueDeMaxim.update(deltaFrame);        
+        this.AtaqueDeMaxim.update(deltaFrame);
+        const dt = deltaTime/1000
         if (Keyboard.state.get("ArrowDown"))
         {
-            this.AtaqueDeMaxim.y++;
+            this.AtaqueDeMaxim.y+=this.speed * dt;
         };
         
         // Para moverme hacia arriba
         this.AtaqueDeMaxim.update(deltaFrame);        
         if (Keyboard.state.get("ArrowUp"))
         {
-            this.AtaqueDeMaxim.y--;
+            this.AtaqueDeMaxim.y-=10;
         };
         
         // Para moverme hacia la izquierda
         this.AtaqueDeMaxim.update(deltaFrame);        
         if (Keyboard.state.get("ArrowLeft"))
         {
-            this.AtaqueDeMaxim.x--;
+            this.AtaqueDeMaxim.x-=10;
         };        
         
         // Para moverme hacia la derecha
         this.AtaqueDeMaxim.update(deltaFrame);        
         if (Keyboard.state.get("ArrowRight"))
         {
-            this.AtaqueDeMaxim.x++;
+            this.AtaqueDeMaxim.x+=10;
         };
 
     }

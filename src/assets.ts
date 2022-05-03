@@ -24,4 +24,5 @@ export const assets = [
     {url: "./spritesheet (1).json", name:"Juan"},
     {url: "./uipack-rpg/PNG/cursorGauntlet_grey.png", name:"Guante"},
     {url: "maps/casita.json", name:"Casa"},
+    {url: "./uipack_fixed/Spritesheet/blueSheet.xml", name:"BlueSheetUI"},
 ]

@@ -1,11 +1,11 @@
 import { Application, Loader, Ticker} from 'pixi.js'
 import { assets } from './assets';
-// import { UIDemo } from './scenes/UIDemo';
-// import { Scene } from './scenes/Scene';
+import { UIDemo } from './scenes/UIDemo';
+import { Scene } from './scenes/Scene';
 import { Keyboard } from './utils/Keyboard';
 // import { Ataque } from './scenes/EscenaClase5';
-import { Dvd } from './scenes/Dvd';
-// import { WarriorMoving } from './scenes/juanMejorado copy';
+// import { Dvd } from './scenes/Dvd';
+import { WarriorMoving } from './scenes/juanMejorado copy';
 
 export const WIDTH=1280;
 export const HEIGHT=720;
@@ -50,11 +50,9 @@ Loader.shared.add(assets);
 
 Loader.shared.onComplete.add(()=>{
 
-	// const myScene = new Scene();
-	// 	app.stage.addChild(myScene);
+	const myScene = new Scene();
+		app.stage.addChild(myScene);
 
-	// const myDemo = new UIDemo();
-	// 	app.stage.addChild(myDemo);
 
 	// const attack = new Ataque();
 	// 	app.stage.addChild(attack);
@@ -63,16 +61,20 @@ Loader.shared.onComplete.add(()=>{
 		function(deltaFrame)
 		{
 		//attack.update(Ticker.shared.deltaMS,deltaFrame);
-		//juancito.update(Ticker.shared.deltaMS,deltaFrame);
-		dvd.update(Ticker.shared.deltaMS,deltaFrame);
+		juancito.update(Ticker.shared.deltaMS,deltaFrame);
+		// dvd.update(Ticker.shared.deltaMS,deltaFrame);
 
 		;})
 
-	const dvd = new Dvd();
-		app.stage.addChild(dvd);
+	// const dvd = new Dvd();
+	// 	app.stage.addChild(dvd);
 
-	// const juancito = new WarriorMoving();
-	// 	app.stage.addChild(juancito);
+	const juancito = new WarriorMoving();
+		app.stage.addChild(juancito);
+
+		const myDemo = new UIDemo();
+		app.stage.addChild(myDemo);
+
 })
 
 Loader.shared.load();

@@ -10,7 +10,7 @@ export class Popup extends Container {
 
         this.addChild(Sprite.from("Window"))
 
-        const spr = Sprite.from("Button Default Mouse");
+        const spr = Sprite.from("blue_boxCross.png");
         spr.x = 100;
         spr.y = 100;
         spr.on("click",  this.closeMe, this);

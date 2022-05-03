@@ -1,5 +1,6 @@
 import { Container, InteractionEvent, Sprite, Text, Texture } from "pixi.js";
 import { Button } from "../ui/Button";
+import { Popup } from "../ui/PopUp";
 import { ToggleButton } from "../ui/ToggleButton";
 import { Keyboard } from "../utils/Keyboard";
 import { Cartel } from "./Cartel";
@@ -12,6 +13,7 @@ export class UIDemo extends Container{
     private lastKeyPressed: Text;
     private dragging:boolean=false;
     private cartel: Cartel;
+    private close: Popup;
     
 
     constructor(){
@@ -27,6 +29,12 @@ export class UIDemo extends Container{
         this.cartel.on("mousedown", this.beginDrag, this);
         this.cartel.on("mouseup", this.endDrag, this);
         this.cartel.on("mousemove", this.moveDrag, this);
+
+        /*  CLOSE  */
+        this.close = new Popup();
+        this.close.x= this.cartel.width + 235
+        this.close.y = this.cartel.height + 205
+        
 
         { /* START:                 ANTES ERA ASÍ (NO ERA UN "THIS")  -------- 
         PERO PARA PODER HACER QUE SEA UN "OBJETO" 
@@ -51,8 +59,8 @@ export class UIDemo extends Container{
         this.buttonMouse.on("mouseup", this.endDrag, this);
         this.buttonMouse.on("mousemove", this.moveDrag, this);
         this.buttonMouse.on("buttonClick", this.onButtonClick, this);
-
         /*this.onButtonClick.bind(this))  le saco el bind y el renglon además voy a Button.ts y le saco todos los callbacks */
+
         /* TODO ESTO SE VA PORQUE AHORA ESTÁ DENTRO DEL ARCHIVO BUTTON.TS
         this.buttonMouse.anchor.set(0.5); 
         this.buttonMouse.on("mousedown", this.onMouseDown, this)
@@ -124,11 +132,13 @@ export class UIDemo extends Container{
         this.addChild(this.buttonSound);
         this.addChild(this.buttonMouse);
         this.addChild(dialog);
+        this.addChild(this.close);
         //this.addChild(buttonTouch);  // ESTE ES EL BOTÓN PARA CONTROL CON TOUCH PAD */
         //this.addChild(buttonPointer);  // ESTE ES UN BOTON QUE USA TODO LO DECLARADO EN ESTE CASO TOUCH PAD Y MOUSE */
         Keyboard.down.on("KeyB", this.onKeyB, this); // CON ESTAS DOS FUNCIONES UNO PUEDE APRETAR UN BOTON Y NO
         Keyboard.up.on("KeyB", this.onKeyBUp, this); // APARECE MIL VECES, SINO QUE APRETAS Y HASTA QUE NO SOLTAS NO VUELVE A MARCAR NADA
-        } 
+        
+    } 
     }
 
     private onKeyB(): void{     console.log("apreté la B!", this)   }

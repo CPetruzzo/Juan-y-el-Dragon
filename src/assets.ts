@@ -1,13 +1,6 @@
-// en lugar de cargar todos con cada
-// Loader.shared.add({url: "./MAXIM2.png", name:"Maxim"});
-// Loader.shared.add({url: "./suelo.png", name:"Suelo"});
-// Loader.shared.add({url: "./clampy.png", name:"myClampy"});
-// Loader.shared.add({url: "./cielo.png", name:"Cielo"});
-
 export const assets = [
     {url: "./MAXIM2.png", name:"Maxim"},
     {url: "./suelo.png", name:"Suelo"},
-    {url: "./clampy.png", name:"myClampy"},
     {url: "./cielo.png", name:"Cielo"},
     {url: "./MAXIMTRANSPARENTE1.png", name:"MaximRun1"},
     {url: "./MAXIMTRANSPARENTE2.png", name:"MaximRun2"},
@@ -23,6 +16,7 @@ export const assets = [
     {url: "./spritesheet.json", name:"MaxMov"},
     {url: "./spritesheet (1).json", name:"Juan"},
     {url: "./uipack-rpg/PNG/cursorGauntlet_grey.png", name:"Guante"},
+    {url: "./uipack_fixed/PNG/blue_boxCross.png", name:"XAzul"},
     {url: "maps/casita.json", name:"Casa"},
-    {url: "./uipack_fixed/Spritesheet/blueSheet.xml", name:"BlueSheetUI"},
+    {url: "Juan y El Dragon.png", name:"BG"},
 ]

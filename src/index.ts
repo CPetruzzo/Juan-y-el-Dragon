@@ -1,14 +1,11 @@
 import { Application, Loader, Ticker} from 'pixi.js'
 import { assets } from './assets';
-import { UIDemo } from './scenes/UIDemo';
-import { Scene } from './scenes/Scene';
 import { Keyboard } from './utils/Keyboard';
-// import { Ataque } from './scenes/EscenaClase5';
-// import { Dvd } from './scenes/Dvd';
-import { WarriorMoving } from './scenes/juanMejorado copy';
+import { StartMenu } from './scenes/StartMenu';
 
 export const WIDTH=1280;
 export const HEIGHT=720;
+
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -18,7 +15,6 @@ const app = new Application({
 	width: WIDTH,
 	height: HEIGHT
 });
-
 
 Keyboard.initialize(); /* lo llamo una vez y nunca mas */
 window.addEventListener("resize", ()=>{
@@ -44,37 +40,26 @@ window.addEventListener("resize", ()=>{
 });
 window.dispatchEvent(new Event ("resize"));
 
-
 Loader.shared.add(assets);
 
+let currentScene:any = undefined;
 
 Loader.shared.onComplete.add(()=>{
 
-	const myScene = new Scene();
-		app.stage.addChild(myScene);
+	currentScene = new StartMenu();
+	app.stage.addChild(currentScene);
 
+	Ticker.shared.add(function(deltaFrame) {
+		if (currentScene.update){
+		currentScene.update(Ticker.shared.deltaMS,deltaFrame)};
+	});
 
-	// const attack = new Ataque();
-	// 	app.stage.addChild(attack);
+});
 
-	Ticker.shared.add(
-		function(deltaFrame)
-		{
-		//attack.update(Ticker.shared.deltaMS,deltaFrame);
-		juancito.update(Ticker.shared.deltaMS,deltaFrame);
-		// dvd.update(Ticker.shared.deltaMS,deltaFrame);
-
-		;})
-
-	// const dvd = new Dvd();
-	// 	app.stage.addChild(dvd);
-
-	const juancito = new WarriorMoving();
-		app.stage.addChild(juancito);
-
-		const myDemo = new UIDemo();
-		app.stage.addChild(myDemo);
-
-})
+export function ChangeScene(newScene:any){
+	currentScene.destroy();
+	app.stage.addChild(newScene);
+	currentScene=newScene;
+}
 
 Loader.shared.load();

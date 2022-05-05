@@ -1,18 +1,19 @@
 import { Container, InteractionEvent, Sprite, Text, Texture } from "pixi.js";
+import { ChangeScene } from "..";
 import { Button } from "../ui/Button";
 import { ToggleButton } from "../ui/ToggleButton";
 import { Keyboard } from "../utils/Keyboard";
 import { Cartel } from "./Cartel";
+import { TickerScene } from "./TickerScene";
 
-export class UIDemo extends Container{
+export class StartMenu extends Container{
     
     /* private buttonMouse: Sprite; */
     private buttonMouse: Button;
     private buttonSound: ToggleButton;
     private lastKeyPressed: Text;
     private dragging:boolean=false;
-    private cartel: Cartel;
-    
+    private cartel: Cartel;  
 
     constructor(){
         super();
@@ -121,6 +122,10 @@ export class UIDemo extends Container{
         //document.addEventListener("keyup",this.onKeyUp.bind(this)) */
         }
         
+        const bg = Sprite.from("BG");
+        this.addChild(bg);
+
+
         { // ADD.CHILD:             AGREGANDO TODO CON ADDCHILDS
         this.addChild(this.cartel);
         this.addChild(this.buttonSound);
@@ -219,6 +224,7 @@ export class UIDemo extends Container{
     //BUTTON.TS            HACER FUNCIONAR EL NUEVO BOTÓN  
     private onButtonClick():void{
         console.log("Apreté start", this);
+        ChangeScene(new TickerScene());
     }
 }
 

@@ -15,7 +15,7 @@ export class Player extends PhysicsContainer implements IHitBox {
     {
         super();
 
-            //JUANCITO
+            //JUANCITO CAMINANDO
             this.juanMov= new AnimatedSprite(
                 [
                 Texture.from("Juan1.png"),
@@ -31,6 +31,7 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.juanMov.play();
 
             
+            
             // PUNTO GUÍA
             const auxZero=new Graphics();
             auxZero.beginFill(0xFF00FF);
@@ -39,7 +40,7 @@ export class Player extends PhysicsContainer implements IHitBox {
 
             // CAJAS
             this.hitbox=new Graphics();
-            this.hitbox.beginFill(0xFF00FF, 0.2);
+            this.hitbox.beginFill(0xFF00FF, 0);
             this.hitbox.drawRect(0,0,200,280);
             this.hitbox.endFill();
             this.hitbox.x=-100
@@ -61,22 +62,69 @@ export class Player extends PhysicsContainer implements IHitBox {
         Keyboard.down.off("ArrowUp",this.jump);
     }
 
+   // // ESTADOS - SPRITES
+    // public currentMovement (Movement:any, )
+    // this.walkingLarry = new AnimatedSprite (
+    //     [
+    //         Texture.from("walkLarry1"),
+    //         Texture.from("walkLarry2"),
+    //         Texture.from("walkLarry3"),
+    //         Texture.from("walkLarry4"),
+    //         Texture.from("walkLarry5"),
+    //         Texture.from("walkLarry6"),
+    //     ], false
+    // );
+    // this.idleLarry = Sprite.from("idleLarry");
+    // this.crouchingLarry = new AnimatedSprite (
+    //     [
+    //         Texture.from("crouchLarry3")
+    //     ], false
+    // )
+    // this.jumpingLarry = Sprite.from("jumpLarry1");
+    // this.idleLarry.anchor.set(0.5);
+    // this.idleLarry.scale.set(2.5);
+    // this.walkingLarry.anchor.set(0.5);
+    // this.walkingLarry.scale.set(2.5);
+    // this.walkingLarry.play();
+    // this.walkingLarry.animationSpeed = 0.175;
+    // this.walkingLarry.visible = false;
+    // this.crouchingLarry.anchor.set(0.5);
+    // this.crouchingLarry.scale.set(2.5);
+    // this.crouchingLarry.position.y = 18;
+    // this.crouchingLarry.play();
+    // this.crouchingLarry.visible = false;
+    // this.jumpingLarry.anchor.set(0.5);
+    // this.jumpingLarry.scale.set(2.5);
+    // this.jumpingLarry.visible = false;
+
+    // this.physicsLarry = new PhysicsContainer();
+    // this.physicsLarry.acceleration.y = -Larry.GRAVITY;
+    // this.physicsLarry.addChild(
+    //     this.walkingLarry,
+    //     this.idleLarry,
+    //     this.crouchingLarry,
+    //     this.jumpingLarry
+    // );
+   
+
     //  MOVIMIENTOS
+    
+    //
     public override update(deltaMS:number)
     {
         super.update(deltaMS/1000);
         this.juanMov.update(deltaMS/(1000/60)); // esto es para saber cuantos frames pasaron (que deberían ser 1)
 
-       
+    
         //  CAMINAR HACIA LA IZQUIERDA
         if (Keyboard.state.get("ArrowLeft")){
             this.speed.x=-Player.MOVE_SPEED;
-            this.scale.x=1;
+            this.scale.set(0.5);
         } else if 
         //  CAMINAR HACIA LA DERECHA
         (Keyboard.state.get("ArrowRight")){
             this.speed.x=Player.MOVE_SPEED;
-            this.scale.x=-1;
+            this.scale.set(-0.5,0.5);
         } else {
         //  FRENAR
             this.speed.x=0;
@@ -121,4 +169,11 @@ export class Player extends PhysicsContainer implements IHitBox {
             }
         }
     }
+
+    // VIDA
+        // public health():void;
+        //     if()
+
+
+    
 }

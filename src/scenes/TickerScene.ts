@@ -1,5 +1,6 @@
-import { AnimatedSprite, Container, Sprite, Texture } from "pixi.js";
+import { AnimatedSprite, Container, NineSlicePlane, Sprite, Texture } from "pixi.js";
 import { HEIGHT, WIDTH } from "..";
+import { HealthBar } from "../games/HealthBar";
 import { checkCollision } from "../games/IHitBox";
 import { Platform } from "../games/Platform";
 import { Player } from "../games/Player";
@@ -10,14 +11,12 @@ import { IUpdateable } from "../utils/IUpdateable";
 export class TickerScene extends Container implements IUpdateable {
 
     private playerJuan: Player;
-
     private platforms: Platform[];
-
     private world: Container;
-
     private Boss: AnimatedSprite;
-
     private potions: Potion[];
+    private bar: HealthBar;
+  
 
     constructor() {
         super();
@@ -67,7 +66,7 @@ export class TickerScene extends Container implements IUpdateable {
 
         // LAS POTIONES PARA TOMAR
 
-        this.potions=[];
+        this.potions = [];
 
         const pot1 = new Potion();
         pot1.scale.set(0.1);
@@ -75,13 +74,23 @@ export class TickerScene extends Container implements IUpdateable {
         this.world.addChild(pot1);
         this.potions.push(pot1);
 
-        
+        //LA BARRA DE VIDA:
+        this.bar = new HealthBar();
+        const marco = new NineSlicePlane(Texture.from("Marco"),
+            35, 35, 35, 35
+        );
+        marco.scale.set(2, 0.5);
+        this.bar.scale.set(2,1)
+        this.bar.position.set(10,5)
+        this.addChild(marco,this.bar);
+
         this.addChild(this.world);
     }
 
     // ACTUALIZACION PARA DARLE SU FISICA Y SU MOVIMIENTO
     public update(deltaTime: number, _deltaFrame: number): void {
         this.playerJuan.update(deltaTime); //updateAnimation
+        
 
         // LA COLISION PARA QUE TENGA SU FISICA Y NO CAIGA A TRAVES DE LAS PLATAFORMAS
         for (let platform of this.platforms) {
@@ -90,17 +99,16 @@ export class TickerScene extends Container implements IUpdateable {
                 this.playerJuan.separate(overlap, platform.position);
             }
         }
-        
+
         // LIMITES DE LA PANTALLA
-        { 
+        {
             // LIMITES HORIZONTALES //
 
-            // // LIMITE DERECHO
-            // if (this.playerJuan.x>WIDTH-100)
-            // {            
-            //     this.playerJuan.x=WIDTH-100;
-            //     this.playerJuan.scale.x=-1;
-            // }
+            // LIMITE DERECHO
+            if (this.playerJuan.x > ((2 * WIDTH) - 100)) {
+                this.playerJuan.x = (2 * WIDTH) - 100;
+                this.playerJuan.scale.set(0.5);
+            }
 
             // LIMITE IZQUIERDO 
             if (this.playerJuan.x < 0) {
@@ -134,7 +142,15 @@ export class TickerScene extends Container implements IUpdateable {
             const overlap = checkCollision(this.playerJuan, potion);
             if (overlap != null) {
                 potion.destroy();
+                this.bar.healthbar();
             }
         }
+
+        // //PELEANDO CON EL DRAGON
+        // const overlap = checkCollision(this.playerJuan, this.Boss);
+        //     if (overlap != null) {
+        //         this.playerJuan.separate(overlap, this.Boss.position);
+        //         this.bar.getDamage();
+        //     }
+    }  
     }
-}

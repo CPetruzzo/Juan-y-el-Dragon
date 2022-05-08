@@ -1,25 +1,51 @@
-import { Container, Sprite } from "pixi.js";
+import { Sprite, Texture } from "pixi.js";
+import { PhysicsContainer } from "./PhysicsContainer";
 
-export class HealthBar extends Container {
-    
-    public LowHth =false;
-    public MidHth =false;
-    public FullHth =true;
+export class HealthBar extends PhysicsContainer {
 
-    constructor()
+    private FullHth: Sprite;
+    private LowHth: Sprite;
+    private MidHth: Sprite;
+    public heal=true;
 
-    {
+    constructor() {
         super();
 
-        const LowHth:Sprite = Sprite.from("RedHth");
-        this.addChild(LowHth);
+        this.LowHth = new Sprite(Texture.from("LowHth"));
+        this.LowHth.position.set(10, 10)
+        this.LowHth.visible = true;
 
-        const MidHth:Sprite = Sprite.from("YellowHth");
-        this.addChild(MidHth);
+        this.MidHth = new Sprite(Texture.from("MidHth"));
+        this.MidHth.position.set(10, 10)
+        this.MidHth.visible = false;
 
-        const FullHth: Sprite= Sprite.from("GreenHth");
-        this.addChild(FullHth);
-        
+        this.FullHth = new Sprite(Texture.from("FullHth"));
+        this.FullHth.position.set(10, 10)
+        this.FullHth.visible = false;
+
+        this.addChild(
+            this.LowHth,
+            this.MidHth,
+            this.FullHth,
+        )
     }
 
+    // SI ME TOMO LA POCION
+    public healthbar() {
+        if (this.heal) {
+            this.LowHth.visible = false;
+            this.MidHth.visible = false;
+            this.FullHth.visible = true;
+            this.heal=false;
+        }
+    }
+
+    // SI ME COMO UNA PIÑA
+    public getDamage(){
+        if(this.heal) {
+            this.LowHth.visible =true;
+            this.MidHth.visible =false;
+            this.FullHth.visible=false;
+        }
+    }
 }

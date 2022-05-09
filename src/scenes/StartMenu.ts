@@ -2,16 +2,21 @@ import { Container, Sprite, Text, Texture } from "pixi.js";
 import { ChangeScene } from "..";
 import { Button } from "../ui/Button";
 import { ToggleButton } from "../ui/ToggleButton";
+import { IUpdateable } from "../utils/IUpdateable";
 import { Cartel } from "./Cartel";
+import { Config } from "./Config";
+import { JuanInicio } from "./JuanStart";
 import { TickerScene } from "./TickerScene";
 
-export class StartMenu extends Container {
+export class StartMenu extends Container implements IUpdateable{
 
     /* private buttonMouse: Sprite; */
-    private buttonMouse: Button;
+    private start: Button;
+    private configuracion: Button;
     private buttonSound: ToggleButton;
     private lastKeyPressed: Text;
     private cartel: Cartel;
+    private juanStart: JuanInicio;
 
     constructor() {
         super();
@@ -24,16 +29,28 @@ export class StartMenu extends Container {
         dialog.x = 100;
         dialog.y = 50;
 
-        { /* START:                 COMO QUEDÓ EL BOTON DE START AL FINAL*/
-            this.buttonMouse = new Button(Texture.from("Start1"),
-                Texture.from("Start2"),
-                Texture.from("Start3"));
-            this.buttonMouse.x = this.cartel.width + 235
-            this.buttonMouse.y = this.cartel.height + 205
-            this.buttonMouse.scale.x=0.5;
-            this.buttonMouse.scale.y=0.5;
-            this.buttonMouse.on("buttonClick", this.onButtonClick, this);
+        // JUAN WALKING BELOW:
+        this.juanStart= new JuanInicio();
 
+        { /* START:                 COMO QUEDÓ EL BOTON DE START AL FINAL*/
+            this.start = new Button(Texture.from("Start3"),
+                Texture.from("Start2"),
+                Texture.from("Start1"));
+            this.start.x = this.cartel.width + 235
+            this.start.y = this.cartel.height + 205
+            this.start.scale.x=0.5;
+            this.start.scale.y=0.5;
+            this.start.on("buttonClick", this.onButtonClick, this);
+
+            // CONFIG
+            this.configuracion = new Button(Texture.from("SET1"),
+                Texture.from("SET3"),
+                Texture.from("SET2"));
+            this.configuracion.x = this.cartel.width + 235
+            this.configuracion.y = this.cartel.height + 265
+            this.configuracion.scale.x=0.5;
+            this.configuracion.scale.y=0.5;
+            this.configuracion.on("buttonClick", this.onButtonClickConfig, this);
 
             { /* TOUCHPAD:              ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA EL TOUCHPAD */
                 const buttonTouch = Sprite.from("Start1");
@@ -68,10 +85,10 @@ export class StartMenu extends Container {
             })
 
             {   //TEXTO
-                this.lastKeyPressed = new Text("Stage 1", { fontSize: 40, fontFamily: ("Arial") });
+                this.lastKeyPressed = new Text("STAGE 1", { fontSize: 40, fontFamily: ("Arial") });
                 this.lastKeyPressed.anchor.set(0.5);
                 this.lastKeyPressed.x = this.cartel.width + 135
-                this.lastKeyPressed.y = this.cartel.height + 85
+                this.lastKeyPressed.y = this.cartel.height + 70
                 dialog.addChild(this.lastKeyPressed);
             }
 
@@ -82,15 +99,23 @@ export class StartMenu extends Container {
             { // ADD.CHILD:             AGREGANDO TODO CON ADDCHILDS
           
                 this.addChild(this.buttonSound);
-                this.addChild(this.buttonMouse);
+                this.addChild(this.start);
+                this.addChild(this.configuracion);
                 this.addChild(dialog);
                 //this.addChild(buttonTouch);  // ESTE ES EL BOTÓN PARA CONTROL CON TOUCH PAD */
                 //this.addChild(buttonPointer);  // ESTE ES UN BOTON QUE USA TODO LO DECLARADO EN ESTE CASO TOUCH PAD Y MOUSE */
 
+                this.addChild(this.juanStart);
             }
         }
     }
 
+    public update(deltaTime: number, _deltaFrame: number): void {
+        this.juanStart.update(deltaTime); //updateAnimation
+
+
+    
+    }
     /* PARA QUE EL MOUSE DEL TOUCHPAD HAGA CLICK */
     private onTouchDown(): void { console.log("touch down"); }
     private onTouchUp(): void { console.log("touch up"); }
@@ -104,4 +129,9 @@ export class StartMenu extends Container {
         console.log("Apreté start", this);
         ChangeScene(new TickerScene());
     }
+    private onButtonClickConfig(): void {
+        console.log("Apreté Config", this);
+        ChangeScene(new Config());
+    }
+    
 }

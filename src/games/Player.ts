@@ -4,7 +4,7 @@ import { IHitBox } from "./IHitBox";
 import { PhysicsContainer } from "./PhysicsContainer";
 
 export class Player extends PhysicsContainer implements IHitBox {
-   
+       
     private static readonly GRAVITY = 1000;
     private static readonly MOVE_SPEED = 350;
     public canJump= true;
@@ -16,6 +16,7 @@ export class Player extends PhysicsContainer implements IHitBox {
     private juanAtk: AnimatedSprite;
     private juanDfnd: AnimatedSprite;
     private juanPot: Sprite;
+    // private canKill=true;
 
     constructor()
     {
@@ -88,9 +89,7 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.hitbox.x=-100
             this.hitbox.y=-280
 
-            //AGREGANDO
-            this.addChild(this.juanWlk);
-            this.addChild(auxZero);
+            // this.addChild(auxZero);
             this.addChild(this.hitbox)
 
             this.acceleration.y= Player.GRAVITY;
@@ -214,9 +213,26 @@ export class Player extends PhysicsContainer implements IHitBox {
                 this.y -= overlap.height;
                 this.speed.y=0;
                 this.canJump=true;
+            
             } else if (this.y < platform.y) {
                 this.y += overlap.height;
-            }
+                
+                }
         }
+    }
+
+    public getHit(){
+        this.juanDfnd.visible=true;
+        this.juanWlk.visible=false;
+        this.juanAtk.visible=false;
+        this.position.x-=5;
+    }
+
+    public attacks() {
+        this.juanAtk.visible=true;
+        this.juanDfnd.visible=false;
+        this.juanWlk.visible=false;
+        this.juanIdle.visible=false;
+        this.juanPot.visible=false;
     }
 }

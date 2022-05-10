@@ -31,7 +31,7 @@ export const assets = [
     {url: "./uipack_fixed/PNG/blue_boxCross.png", name:"XAzul"},
 
     // MOVIMIENTOS DE MAXIM Y DE JUAN
-    {url: "./spritesheet.json", name:"MaxMov"},
+    // {url: "./spritesheet.json", name:"MaxMov"},
     {url: "./spritesheet (1).json", name:"Juan"},
 
     // DRAGON

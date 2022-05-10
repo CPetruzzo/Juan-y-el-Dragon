@@ -101,7 +101,7 @@ export class Config extends Container {
 
     //BUTTON.TS            HACER FUNCIONAR EL NUEVO BOTÓN  
     private onButtonClick(): void {
-        console.log("Apreté start", this);
+        console.log("Apreté volver", this);
         ChangeScene(new StartMenu());
     }
 }

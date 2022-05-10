@@ -7,6 +7,7 @@ import { Platform } from "../games/Platform";
 import { Player } from "../games/Player";
 import { Potion } from "../games/Potions";
 import { IUpdateable } from "../utils/IUpdateable";
+import { Keyboard } from "../utils/Keyboard";
 import { Cartel } from "./Cartel";
 
 
@@ -24,6 +25,7 @@ export class TickerScene extends Container implements IUpdateable {
     private cartelmisterioso: Cartel;
     private cartelfinal: Cartel;
     private dialogodragon: Text;
+    private marco2: NineSlicePlane;
   
 
     constructor() {
@@ -114,17 +116,17 @@ export class TickerScene extends Container implements IUpdateable {
         
         // LA BARRA DE VIDA DEL DRAGON
         this.bar2 = new HealthBar();
-        const marco2 = new NineSlicePlane(Texture.from("Marco"),
+        this.marco2 = new NineSlicePlane(Texture.from("Marco"),
             35, 35, 35, 35
         );
-        marco2.scale.set(1, 1);
-        marco2.position.x=this.Boss.position.x-220;
-        marco2.position.y=this.Boss.position.y-50;
+        this.marco2.scale.set(1, 1);
+        this.marco2.position.x=this.Boss.position.x-220;
+        this.marco2.position.y=this.Boss.position.y-50;
         this.bar2.scale.set(2,1)
         this.bar2.position.x=this.Boss.position.x-215;
         this.bar2.position.y=this.Boss.position.y-45;
         
-        this.world.addChild(marco2,this.bar2);
+        this.world.addChild(this.marco2,this.bar2);
         this.addChild(marco1,this.bar);
 
 
@@ -188,6 +190,15 @@ export class TickerScene extends Container implements IUpdateable {
             }
         }
 
+        // PARA PAUSAR EL FONDO
+        if(Keyboard.state.get("Escape")){
+            this.visible=false;
+        }
+
+        if (Keyboard.state.get("KeyR")){
+            this.visible=true;
+        }
+
     // LIMITES DE LA PANTALLA
         {
     // LIMITES HORIZONTALES //
@@ -237,21 +248,33 @@ export class TickerScene extends Container implements IUpdateable {
         for (let potion of this.potions) {
             const overlap = checkCollision(this.playerJuan, potion);
             if (overlap != null) {
+                console.log("tomé la poción")
                 potion.destroy();
                 this.bar.getHealth();
             }
         }
 
         //PELEANDO CON EL DRAGON
-        const overlap = checkCollision(this.playerJuan, this.Boss);
-            if (overlap != null) {
-                this.playerJuan.separate(overlap, this.Boss.position);
-                this.bar.getRealDamage();
-                this.bar.getDamage();
-                this.playerJuan.getHit();
-                
-                }
-                }
-        } 
+        const pelea = checkCollision(this.playerJuan, this.Boss);
+        if (pelea != null && (Keyboard.state.get("Space"))) {
+            this.playerJuan.separate(pelea, this.Boss.position);
+            console.log("me defiendo")
+        }
+        else if (pelea != null && (Keyboard.state.get("Enter"))) {
+            this.playerJuan.separate(pelea, this.Boss.position);
+            this.playerJuan.attacks();
+            this.world.removeChild(this.bar2,this.marco2,this.Boss);
+            console.log("lo maté")
+        }
+        else if (pelea != null){
+            this.playerJuan.separate(pelea, this.Boss.position);
+            console.log("me pegó")
+            this.bar.getRealDamage();
+            this.bar.getDamage();
+            this.playerJuan.getHit();
+        }
+        
+    }
+} 
 
     

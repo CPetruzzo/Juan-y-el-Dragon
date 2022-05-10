@@ -141,8 +141,10 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.juanIdle.visible=false;
             this.juanDfnd.visible=false;
             this.juanPot.visible=false;
-        } else {
-        //  FRENAR
+        
+        
+        } else /*  FRENAR  */ {
+            
             this.speed.x=0;
             this.juanWlk.visible=false;
             this.juanAtk.visible=false;
@@ -171,7 +173,6 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.juanDfnd.visible=true;
             this.juanPot.visible=false;
         }
-
     }
 
     //  FUNCION AUXILIAR (SI NO LA TENGO SEPARADA NO PUEDO BORRARLA CUANDO ELIMINE A PLAYER)
@@ -211,13 +212,11 @@ export class Player extends PhysicsContainer implements IHitBox {
         else {
             if (this.y > platform.y) {
                 this.y -= overlap.height;
-                this.speed.y=0;
-                this.canJump=true;
-            
+                this.speed.y = 0;
+                this.canJump = true;
             } else if (this.y < platform.y) {
                 this.y += overlap.height;
-                
-                }
+            }
         }
     }
 
@@ -229,6 +228,7 @@ export class Player extends PhysicsContainer implements IHitBox {
     }
 
     public attacks() {
+        console.log("estoy atacando")
         this.juanAtk.visible=true;
         this.juanDfnd.visible=false;
         this.juanWlk.visible=false;

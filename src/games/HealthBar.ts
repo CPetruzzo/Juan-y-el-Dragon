@@ -40,6 +40,7 @@ export class HealthBar extends PhysicsContainer {
             this.LowHth.visible = false;
             this.MidHth.visible = false;
             this.FullHth.visible = true;
+            this.canHurt=true;
     }
     
 
@@ -56,6 +57,23 @@ export class HealthBar extends PhysicsContainer {
         }
     }
     
+    public FullHealth(){
+        this.FullHth.visible=true;
+        this.MidHth.visible=false;
+        this.LowHth.visible=false;
+    
+    }
+    public MidHealth () {
+        this.FullHth.visible=false;
+        this.MidHth.visible=true;
+        this.LowHth.visible=false;
+    }
+    public LowHealth () {
+        this.FullHth.visible=false
+        this.MidHth.visible=false;
+        this.LowHth.visible=true;
+    }
+
     public getRealDamage(){
         if(this.canReallyHurt) {
             console.log("quede al horno");

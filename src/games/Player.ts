@@ -16,7 +16,8 @@ export class Player extends PhysicsContainer implements IHitBox {
     private juanAtk: AnimatedSprite;
     private juanDfnd: AnimatedSprite;
     private juanPot: Sprite;
-    // private canKill=true;
+    private swordbox: Graphics;
+    private agachaditobox: Graphics;
 
     constructor()
     {
@@ -75,6 +76,24 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.juanIdle.position.set(-90,-290)
             this.juanIdle.visible=true;
 
+            this.swordbox=new Graphics();
+            this.swordbox.beginFill(0x00FF00, 0.5);
+            this.swordbox.drawRect(0,0,-200,-250);
+            this.swordbox.endFill();
+            this.swordbox.x=0;
+            this.swordbox.y=0;
+            this.swordbox.visible=false;
+            this.addChild(this.swordbox);
+
+            this.agachaditobox=new Graphics();
+            this.agachaditobox.beginFill(0x00FF00, 0.5);
+            this.agachaditobox.drawRect(0,0,-100,-150);
+            this.agachaditobox.endFill();
+            this.agachaditobox.x=0;
+            this.agachaditobox.y=0;
+            this.agachaditobox.visible=false;
+            this.addChild(this.agachaditobox);
+
             // PUNTO GUÍA
             const auxZero=new Graphics();
             auxZero.beginFill(0xFF00FF);
@@ -90,7 +109,7 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.hitbox.y=-280
 
             // this.addChild(auxZero);
-            this.addChild(this.hitbox)
+            this.addChild(this.hitbox, this.agachaditobox, this.swordbox)
 
             this.acceleration.y= Player.GRAVITY;
             Keyboard.down.on("ArrowUp",this.jump,this)
@@ -129,6 +148,7 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.juanPot.visible=false;
             this.juanWlk.scale.x=1;            
             this.juanWlk.position.set(200,150)
+            this.swordbox.visible=false;
 
         } else if 
         //  CAMINAR HACIA LA DERECHA
@@ -141,21 +161,34 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.juanIdle.visible=false;
             this.juanDfnd.visible=false;
             this.juanPot.visible=false;
-        
-        
-        } else /*  FRENAR  */ {
+            this.swordbox.visible=false;
+        } else if 
+            //arrastrarse
+            ((Keyboard.state.get("ArrowDown")) && (Keyboard.state.get("ArrowRight"))){
+                this.speed.x=Player.MOVE_SPEED;
+                this.scale.set(-0.5,0.5);
+                this.juanWlk.position.set(200,150)
+                this.juanWlk.visible=true;
+                this.juanAtk.visible=false;
+                this.juanIdle.visible=false;
+                this.juanDfnd.visible=false;
+                this.juanPot.visible=false;
+                this.swordbox.visible=false;
             
+      } else /*  FRENAR  */ {
             this.speed.x=0;
             this.juanWlk.visible=false;
             this.juanAtk.visible=false;
             this.juanIdle.visible=true;
             this.juanDfnd.visible=false;
             this.juanPot.visible=false;
+            this.swordbox.visible=false;
         }
         // SALTAR
         if (Keyboard.state.get("ArrowUp")){
             this.jump;
             this.juanPot.visible=false;
+            this.swordbox.visible=false;
         }
         // ATACAR
         if (Keyboard.state.get("Enter")){
@@ -164,6 +197,7 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.juanIdle.visible=false;
             this.juanDfnd.visible=false;
             this.juanPot.visible=false;
+            this.swordbox.visible=false;
         }
         //DEFENDER
         if (Keyboard.state.get("Space")){
@@ -172,6 +206,7 @@ export class Player extends PhysicsContainer implements IHitBox {
             this.juanIdle.visible=false;
             this.juanDfnd.visible=true;
             this.juanPot.visible=false;
+            this.swordbox.visible=false;
         }
     }
 
@@ -234,5 +269,7 @@ export class Player extends PhysicsContainer implements IHitBox {
         this.juanWlk.visible=false;
         this.juanIdle.visible=false;
         this.juanPot.visible=false;
+        this.swordbox.visible=false;
+        
     }
 }

@@ -13,7 +13,7 @@ export const assets = [
     {url: "./StartScene/BACK (1).png", name:"BACK2"},
     {url: "./StartScene/BACK (2).png", name:"BACK3"},
     {url: "./StartScene/BG SETTINGS.png", name:"BGSET"},
-    {url: "./StageOne/BG.png", name:"SceneBG"},
+    {url: "./StageOne/BG2.png", name:"SceneBG"},
     {url: "./StageOne/Floor2.png", name:"Floor"},
     {url: "./StageOne/Floor.png", name:"Block"},
     

@@ -26,7 +26,7 @@ export class TickerScene extends Container implements IUpdateable {
     private cartelfinal: Cartel;
     private dialogodragon: Text;
     private marco2: NineSlicePlane;
-  
+    public numero=0;
 
     constructor() {
         super();
@@ -36,9 +36,9 @@ export class TickerScene extends Container implements IUpdateable {
         // UN POCO DE FONDO APOYADO EN EL MUNDO
         const bg = Sprite.from("SceneBG");
         bg.anchor.set(0.6);
-        bg.scale.set(2)
-        bg.position.y = 250;
-        bg.position.x = WIDTH - 200;
+        bg.scale.set(1.5)
+        bg.position.y = 290;
+        bg.position.x = WIDTH - 700;
         this.addChild(bg);
 
         const Floor = Sprite.from("Floor");
@@ -126,6 +126,7 @@ export class TickerScene extends Container implements IUpdateable {
         this.bar2.position.x=this.Boss.position.x-215;
         this.bar2.position.y=this.Boss.position.y-45;
         
+        
         this.world.addChild(this.marco2,this.bar2);
         this.addChild(marco1,this.bar);
 
@@ -139,7 +140,7 @@ export class TickerScene extends Container implements IUpdateable {
         dialog.x = 100;
         dialog.y = 50;
         {   //TEXTO
-            this.lastKeyPressed = new Text("No puedes ir hacia allá", { fontSize: 30, fontFamily: ("Arial") });
+            this.lastKeyPressed = new Text("No tiene sentido volver", { fontSize: 30, fontFamily: ("Arial") });
             this.lastKeyPressed.anchor.set(0.5);
             this.lastKeyPressed.x = this.cartelmisterioso.width + 150
             this.lastKeyPressed.y = this.cartelmisterioso.height + 100
@@ -156,7 +157,7 @@ export class TickerScene extends Container implements IUpdateable {
         dialog.x = 100;
         dialog.y = 50;
         {   //TEXTO
-            this.dialogodragon = new Text("El dragon no te dejará avanzar", { fontSize: 20, fontFamily: ("Arial") });
+            this.dialogodragon = new Text("Este dragón es más fuerte que el otro", { fontSize: 20, fontFamily: ("Arial") });
             this.dialogodragon.anchor.set(0.5);
             this.dialogodragon.x = this.cartelfinal.width + 250
             this.dialogodragon.y = this.cartelfinal.height + 150
@@ -256,25 +257,45 @@ export class TickerScene extends Container implements IUpdateable {
 
         //PELEANDO CON EL DRAGON
         const pelea = checkCollision(this.playerJuan, this.Boss);
+
+        // MODO DEFENSIVO
         if (pelea != null && (Keyboard.state.get("Space"))) {
             this.playerJuan.separate(pelea, this.Boss.position);
-            console.log("me defiendo")
         }
+
+        // MODO ATAQUE
         else if (pelea != null && (Keyboard.state.get("Enter"))) {
             this.playerJuan.separate(pelea, this.Boss.position);
             this.playerJuan.attacks();
-            this.world.removeChild(this.bar2,this.marco2,this.Boss);
-            console.log("lo maté")
-        }
+            if ((Keyboard.state.get("Enter"))){
+                this.numero++;
+                if (this.numero>50){
+                    this.bar2.MidHealth();              
+                }
+                if (this.numero>75){
+                    this.bar2.LowHealth();
+                    if (this.bar.MidHealth){
+                    this.bar.MidHealth();} else {this.bar.LowHealth()};            
+                }
+                if (this.numero>100){
+                    this.world.removeChild(this.bar2,this.Boss,this.marco2);
+                    if (this.bar.LowHealth) {
+                        this.bar.LowHealth()
+                    } else if (this.bar.MidHealth) {    
+                        this.bar.MidHealth()
+                    }
+                }
+            }
+
+        // RECIBIENDO DAÑO POR NO HACER NADA
         else if (pelea != null){
             this.playerJuan.separate(pelea, this.Boss.position);
-            console.log("me pegó")
             this.bar.getRealDamage();
             this.bar.getDamage();
             this.playerJuan.getHit();
         }
-        
     }
-} 
+}
+}
 
-    
+  

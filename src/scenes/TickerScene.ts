@@ -26,12 +26,12 @@ export class TickerScene extends Container implements IUpdateable {
     private cartelfinal: Cartel;
     private dialogodragon: Text;
     private marco2: NineSlicePlane;
-    public numero=0;
+    public numero:number =0;
 
     constructor() {
         super();
 
-        this.world = new Container;
+        this.world = new Container();
 
         // UN POCO DE FONDO APOYADO EN EL MUNDO
         const bg = Sprite.from("SceneBG");
@@ -53,11 +53,11 @@ export class TickerScene extends Container implements IUpdateable {
         this.Boss.position.set((WIDTH+200),(HEIGHT-280));
         this.world.addChild(this.Boss);
 
+        //EL OTRO JEFE
         this.FinalBoss=new Enemy();
-        this.FinalBoss.position.set((WIDTH+1850),(HEIGHT-80));
+        this.FinalBoss.position.set((WIDTH+1470),(HEIGHT-80));
         this.FinalBoss.scale.set(3);
         this.world.addChild(this.FinalBoss);
-
 
         // UN JUGADOR
         this.playerJuan = new Player();
@@ -77,14 +77,14 @@ export class TickerScene extends Container implements IUpdateable {
         const plat2 = new Platform();
         plat2.scale.x=0.5
         plat2.position.x = 600;
-        plat2.position.y = 150;
+        plat2.position.y = 400;
         this.world.addChild(plat2);
         this.platforms.push(plat2);
 
         const plat3 = new Platform();
         plat3.scale.x=0.5
         plat3.position.x = 750;
-        plat3.position.y = 150;
+        plat3.position.y = 250;
         this.world.addChild(plat3);
         this.platforms.push(plat3);
 
@@ -101,7 +101,7 @@ export class TickerScene extends Container implements IUpdateable {
 
         const pot1 = new Potion();
         pot1.scale.set(0.1);
-        pot1.position.set(635, HEIGHT - 630)
+        pot1.position.set(1365, HEIGHT - 830)
         this.world.addChild(pot1);
         this.potions.push(pot1);
 
@@ -111,8 +111,8 @@ export class TickerScene extends Container implements IUpdateable {
             35, 35, 35, 35
         );
         marco1.scale.set(1, 1);
-        this.bar.scale.set(2,1)
-        this.bar.position.set(5,5)
+        this.bar.scale.set(2,1);
+        this.bar.position.set(5,5);
         
         // LA BARRA DE VIDA DEL DRAGON
         this.bar2 = new HealthBar();
@@ -120,16 +120,14 @@ export class TickerScene extends Container implements IUpdateable {
             35, 35, 35, 35
         );
         this.marco2.scale.set(1, 1);
-        this.marco2.position.x=this.Boss.position.x-220;
+        this.marco2.position.x=this.Boss.position.x-80;
         this.marco2.position.y=this.Boss.position.y-50;
         this.bar2.scale.set(2,1)
-        this.bar2.position.x=this.Boss.position.x-215;
+        this.bar2.position.x=this.Boss.position.x-73;
         this.bar2.position.y=this.Boss.position.y-45;
-        
         
         this.world.addChild(this.marco2,this.bar2);
         this.addChild(marco1,this.bar);
-
 
         // CARTEL QUE APARECE CUANDO VAS HACIA LA IZQUIERDA
         this.cartelmisterioso = new Cartel();
@@ -165,7 +163,6 @@ export class TickerScene extends Container implements IUpdateable {
             dialogfinal.addChild(this.dialogodragon);
         }
 
-
         this.addChild(this.world);
         
         //CARTEL IZQUIERDA
@@ -175,7 +172,6 @@ export class TickerScene extends Container implements IUpdateable {
         //CARTEL DERECHA
         this.addChild(this.cartelfinal);
         this.addChild(dialogfinal);
-
     }
     
     // ACTUALIZACION PARA DARLE SU FISICA Y SU MOVIMIENTO
@@ -191,19 +187,9 @@ export class TickerScene extends Container implements IUpdateable {
             }
         }
 
-        // PARA PAUSAR EL FONDO
-        if(Keyboard.state.get("Escape")){
-            this.visible=false;
-        }
-
-        if (Keyboard.state.get("KeyR")){
-            this.visible=true;
-        }
-
     // LIMITES DE LA PANTALLA
         {
     // LIMITES HORIZONTALES //
-
         // LIMITE DERECHO
             if (this.playerJuan.x > ((2 * WIDTH) - 100)) {
                 this.playerJuan.x = (2 * WIDTH) - 100;
@@ -226,7 +212,6 @@ export class TickerScene extends Container implements IUpdateable {
             }
 
     // LIMITES VERTICALES //
-
         // LIMITE INFERIOR
             if (this.playerJuan.y > (HEIGHT - 100)) {
                 this.playerJuan.y = (HEIGHT - 100);
@@ -245,6 +230,7 @@ export class TickerScene extends Container implements IUpdateable {
                 (this.world.y = -this.playerJuan.y * this.worldTransform.a + (3 * HEIGHT / 4))
         }
 
+
         // TOMANDO LA POTION
         for (let potion of this.potions) {
             const overlap = checkCollision(this.playerJuan, potion);
@@ -255,14 +241,13 @@ export class TickerScene extends Container implements IUpdateable {
             }
         }
 
+
         //PELEANDO CON EL DRAGON
         const pelea = checkCollision(this.playerJuan, this.Boss);
-
         // MODO DEFENSIVO
         if (pelea != null && (Keyboard.state.get("Space"))) {
             this.playerJuan.separate(pelea, this.Boss.position);
         }
-
         // MODO ATAQUE
         else if (pelea != null && (Keyboard.state.get("Enter"))) {
             this.playerJuan.separate(pelea, this.Boss.position);
@@ -286,7 +271,7 @@ export class TickerScene extends Container implements IUpdateable {
                     }
                 }
             }
-
+        }
         // RECIBIENDO DAÑO POR NO HACER NADA
         else if (pelea != null){
             this.playerJuan.separate(pelea, this.Boss.position);
@@ -296,6 +281,3 @@ export class TickerScene extends Container implements IUpdateable {
         }
     }
 }
-}
-
-  

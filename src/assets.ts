@@ -17,6 +17,8 @@ export const assets = [
     {url: "./StageOne/Floor2.png", name:"Floor"},
     {url: "./StageOne/Floor.png", name:"Block"},
     
+    {url: "./uipack_fixed/Spritesheet/blueSheet.xml", name:"lala"},
+
     // TODO LO QUE TIENE QUE VER CON CARTELITOS
     {url: "uipack-space/PNG/metalPanel_blueCorner.png", name:"PanelBlue"},
     {url: "gameicons-expansion/Game-icons-(base)/PNG/White/2x/wrench.png", name:"Config"},

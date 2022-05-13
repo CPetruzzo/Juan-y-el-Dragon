@@ -27,25 +27,24 @@ export class Enemy extends PhysicsContainer implements IHitBox {
             );
         this.DragonWlk.play();
         this.DragonWlk.animationSpeed = 0.05;
-        this.DragonWlk.position.x =0;
+        this.DragonWlk.position.x =135;
         this.DragonWlk.position.y =-170;
         this.DragonWlk.scale.set(-1, 1);
         this.DragonWlk.visible=true;
         this.addChild(this.DragonWlk);
 
-            // // PUNTO GUÍA
-            // const auxZero=new Graphics();
-            // auxZero.beginFill(0xFF00FF);
-            // auxZero.drawCircle(-100,0,10);
-            // auxZero.endFill();
+            // PUNTO GUÍA
+            const auxZero=new Graphics();
+            auxZero.beginFill(0xFF00FF);
+            auxZero.drawCircle(0,0,10);
+            auxZero.endFill();
 
             // CAJAS
             this.hitbox=new Graphics();
             this.hitbox.beginFill(0xFF00FF, 0);
-            this.hitbox.drawRect(-110,115,180,150);
+            this.hitbox.drawRect(-80,-140,190,150);
             this.hitbox.endFill();
-            this.hitbox.x=-100
-            this.hitbox.y=-280
+            
 
             // //AGREGANDO
             // this.addChild(this.DragonWlk);

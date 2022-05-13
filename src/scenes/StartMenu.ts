@@ -21,6 +21,7 @@ export class StartMenu extends Container implements IUpdateable{
     constructor() {
         super();
 
+        
         //  CARTEL:                 AGREGANDO EL CARTEL A LA PANTALLA
         this.cartel = new Cartel();
         this.cartel.position.set(455, 260);
@@ -133,5 +134,4 @@ export class StartMenu extends Container implements IUpdateable{
         console.log("Apreté Config", this);
         ChangeScene(new Config());
     }
-    
 }

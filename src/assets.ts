@@ -13,9 +13,16 @@ export const assets = [
     {url: "./StartScene/BACK (1).png", name:"BACK2"},
     {url: "./StartScene/BACK (2).png", name:"BACK3"},
     {url: "./StartScene/BG SETTINGS.png", name:"BGSET"},
+
     {url: "./StageOne/BG2.png", name:"SceneBG"},
     {url: "./StageOne/Floor2.png", name:"Floor"},
     {url: "./StageOne/Floor.png", name:"Block"},
+
+    {url: "./StageOne/B1.png", name:"B1"},
+    {url: "./StageOne/B2.png", name:"B2"},
+    {url: "./StageOne/B3.png", name:"B3"},
+    {url: "./StageOne/B4.png", name:"B4"},
+    {url: "./StageOne/B5.png", name:"B5"},
     
     {url: "./uipack_fixed/Spritesheet/blueSheet.xml", name:"lala"},
 

@@ -1,4 +1,4 @@
-import { Container, NineSlicePlane, Sprite, Text, Texture } from "pixi.js";
+import { Container, NineSlicePlane, Sprite, Text, Texture, TilingSprite } from "pixi.js";
 import { HEIGHT, WIDTH } from "..";
 import { Enemy } from "../games/Enemy";
 import { HealthBar } from "../games/HealthBar";
@@ -27,25 +27,40 @@ export class TickerScene extends Container implements IUpdateable {
     private dialogodragon: Text;
     private marco2: NineSlicePlane;
     public numero:number =0;
+    private backgrounds: TilingSprite[];
+    gameOver: boolean = false;
 
     constructor() {
         super();
+        this.backgrounds=[];
+
+        for (let i=1; i<6; i++){
+            const background = new TilingSprite(
+                Texture.from("B"+i),
+                1280,
+                720
+            );
+            this.addChild(background);
+            this.backgrounds.push(background);
+            
+            }
 
         this.world = new Container();
 
+
         // UN POCO DE FONDO APOYADO EN EL MUNDO
-        const bg = Sprite.from("SceneBG");
-        bg.anchor.set(0.6);
-        bg.scale.set(1.5)
-        bg.position.y = 290;
-        bg.position.x = WIDTH - 700;
-        this.addChild(bg);
+        // const bg = Sprite.from("SceneBG");
+        // bg.anchor.set(0.6);
+        // bg.scale.set(1.5)
+        // bg.position.y = 290;
+        // bg.position.x = WIDTH - 700;
+        // this.addChild(bg);
 
         const Floor = Sprite.from("Floor");
         Floor.anchor.set(0);
         Floor.scale.set(3)
         Floor.position.x = WIDTH - 1750;
-        Floor.position.y = 610;
+        Floor.position.y = 710;
         this.world.addChild(Floor);
 
         // UN JEFE
@@ -55,13 +70,14 @@ export class TickerScene extends Container implements IUpdateable {
 
         //EL OTRO JEFE
         this.FinalBoss=new Enemy();
-        this.FinalBoss.position.set((WIDTH+1470),(HEIGHT-80));
+        this.FinalBoss.position.set((WIDTH+1470),(HEIGHT+10));
         this.FinalBoss.scale.set(3);
         this.world.addChild(this.FinalBoss);
 
         // UN JUGADOR
         this.playerJuan = new Player();
         this.playerJuan.scale.set(0.5);
+        this.playerJuan.position.y=650;
         this.world.addChild(this.playerJuan);
 
         // LA PLATAFORMA PARA PISAR
@@ -70,7 +86,7 @@ export class TickerScene extends Container implements IUpdateable {
         const plat1 = new Platform();
         plat1.scale.x=0.5;
         plat1.position.x = 300;
-        plat1.position.y = 450;
+        plat1.position.y = 550;
         this.world.addChild(plat1);
         this.platforms.push(plat1);
 
@@ -176,8 +192,16 @@ export class TickerScene extends Container implements IUpdateable {
     
     // ACTUALIZACION PARA DARLE SU FISICA Y SU MOVIMIENTO
     public update(deltaTime: number, _deltaFrame: number): void {
+        // if (this.gameOver) return;
         this.playerJuan.update(deltaTime); //updateAnimation
         this.Boss.update(deltaTime);
+        for (let i = 0; i < this.backgrounds.length; i++) {
+			const background = this.backgrounds[i];
+			const factor = i / 10;
+            background.tilePosition.x -= factor * this.playerJuan.speed.x / 200;
+		}
+
+
 
         // LA COLISION PARA QUE TENGA SU FISICA Y NO CAIGA A TRAVES DE LAS PLATAFORMAS
         for (let platform of this.platforms) {
@@ -213,12 +237,14 @@ export class TickerScene extends Container implements IUpdateable {
 
     // LIMITES VERTICALES //
         // LIMITE INFERIOR
-            if (this.playerJuan.y > (HEIGHT - 100)) {
-                this.playerJuan.y = (HEIGHT - 100);
+            if (this.playerJuan.y > (HEIGHT )) {
+                this.playerJuan.y = (HEIGHT );
                 this.playerJuan.canJump = true;
+                this.gameOver = true;
+
             }
-            if (this.Boss.y > (HEIGHT - 100)) {
-                this.Boss.y = (HEIGHT - 100);
+            if (this.Boss.y > (HEIGHT )) {
+                this.Boss.y = (HEIGHT );
                 this.Boss.canJump = true;
             }
         }
@@ -227,7 +253,7 @@ export class TickerScene extends Container implements IUpdateable {
         {
             (this.world.x = - this.playerJuan.x * this.worldTransform.a + WIDTH / 3)
                 &&
-                (this.world.y = -this.playerJuan.y * this.worldTransform.a + (3 * HEIGHT / 4))
+                (this.world.y = -this.playerJuan.y * this.worldTransform.a + (HEIGHT -50))
         }
 
 

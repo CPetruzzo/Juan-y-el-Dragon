@@ -7,7 +7,15 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
+    "@capacitor-community/keep-awake": "^2.1.1",
+    "@capacitor/android": "^3.6.0",
+    "@capacitor/app": "^1.1.1",
+    "@capacitor/cli": "^3.6.0",
+    "@capacitor/core": "^3.6.0",
+    "@capacitor/status-bar": "^1.0.8",
+    "@hugotomazi/capacitor-navigation-bar": "^1.1.1",
     "@pixi/sound": "^4.2.0",
+    "pixi-virtual-joystick": "^0.4.1",
     "pixi.js": "^6.2.2"
   },
   "devDependencies": {

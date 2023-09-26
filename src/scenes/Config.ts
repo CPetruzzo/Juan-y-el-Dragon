@@ -1,6 +1,6 @@
 import { Container, Sprite, Text, Texture } from "pixi.js";
 import { ChangeScene } from "..";
-import { Button } from "../ui/Button";
+import { PointButton } from "../ui/PointButton";
 import { ToggleButton } from "../ui/ToggleButton";
 import { Cartel } from "./Cartel";
 import { StartMenu } from "./StartMenu";
@@ -8,7 +8,7 @@ import { StartMenu } from "./StartMenu";
 export class Config extends Container {
 
     /* private buttonMouse: Sprite; */
-    private buttonMouse: Button;
+    private buttonMouse: PointButton;
     private buttonSound: ToggleButton;
     private lastKeyPressed: Text;
     private cartel: Cartel;
@@ -25,35 +25,36 @@ export class Config extends Container {
         dialog.y = 50;
 
         { /* START:                 COMO QUEDÓ EL BOTON DE START AL FINAL*/
-            this.buttonMouse = new Button(Texture.from("BACK1"),
+            this.buttonMouse = new PointButton(Texture.from("BACK1"),
                 Texture.from("BACK2"),
                 Texture.from("BACK3"));
             this.buttonMouse.x = this.cartel.width + 235
             this.buttonMouse.y = this.cartel.height + 405
             this.buttonMouse.scale.x=0.5;
             this.buttonMouse.scale.y=0.5;
-            this.buttonMouse.on("buttonClick", this.onButtonClick, this);
+            this.buttonMouse.on("pointerClick", this.onButtonClick, this);
 
 
-            { /* TOUCHPAD:              ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA EL TOUCHPAD */
-                const buttonTouch = Sprite.from("Start1");
-                buttonTouch.anchor.set(0.5);
-                buttonTouch.x = this.cartel.width + 115
-                buttonTouch.y = this.cartel.height + 205
-                buttonTouch.on("touchstart", this.onTouchDown, this)
-                buttonTouch.on("touchoff", this.onTouchUp, this)
-                buttonTouch.interactive = true
-            }
+            {//  /* TOUCHPAD:              ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA EL TOUCHPAD */
+            //     const buttonTouch = Sprite.from("Start1");
+            //     buttonTouch.anchor.set(0.5);
+            //     buttonTouch.x = this.cartel.width + 115
+            //     buttonTouch.y = this.cartel.height + 205
+            //     buttonTouch.on("touchstart", this.onTouchDown, this)
+            //     buttonTouch.on("touchoff", this.onTouchUp, this)
+            //     buttonTouch.interactive = true
+            // }
 
-            { /* POINTER:               ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA CLICKEAR CON TOUCH O MOUSE */
-                const buttonPointer = Sprite.from("Start1");
-                buttonPointer.anchor.set(0.5);
-                buttonPointer.x = this.cartel.width + 355
-                buttonPointer.y = this.cartel.height + 205
-                buttonPointer.on("pointerdown", this.onPointerDown, this)
-                buttonPointer.on("pointerup", this.onPointerUp, this)
-                buttonPointer.interactive = true
-            }
+            // { /* POINTER:               ESTO ES TODO LO QUE TENGO QUE DEFINIR PARA CLICKEAR CON TOUCH O MOUSE */
+            //     const buttonPointer = Sprite.from("Start1");
+            //     buttonPointer.anchor.set(0.5);
+            //     buttonPointer.x = this.cartel.width + 355
+            //     buttonPointer.y = this.cartel.height + 205
+            //     buttonPointer.on("pointerdown", this.onPointerDown, this)
+            //     buttonPointer.on("pointerup", this.onPointerUp, this)
+            //     buttonPointer.interactive = true
+            // 
+        }
 
             this.buttonSound = new ToggleButton(
                 Texture.from("MusicOff"),
@@ -91,13 +92,13 @@ export class Config extends Container {
         }
     }
 
-    /* PARA QUE EL MOUSE DEL TOUCHPAD HAGA CLICK */
-    private onTouchDown(): void { console.log("touch down"); }
-    private onTouchUp(): void { console.log("touch up"); }
+    // /* PARA QUE EL MOUSE DEL TOUCHPAD HAGA CLICK */
+    // private onTouchDown(): void { console.log("touch down"); }
+    // private onTouchUp(): void { console.log("touch up"); }
 
-    /* PARA QUE CUALQUIER COSA HAGA CLICK */
-    private onPointerDown(): void { console.log("pointer down"); }
-    private onPointerUp(): void { console.log("pointer up"); }
+    // /* PARA QUE CUALQUIER COSA HAGA CLICK */
+    // private onPointerDown(): void { console.log("pointer down"); }
+    // private onPointerUp(): void { console.log("pointer up"); }
 
     //BUTTON.TS            HACER FUNCIONAR EL NUEVO BOTÓN  
     private onButtonClick(): void {

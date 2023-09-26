@@ -1,3 +1,4 @@
+import { sound } from "@pixi/sound";
 import { Container, Sprite, Text, Texture } from "pixi.js";
 import { ChangeScene } from "..";
 import { Button } from "../ui/Button";
@@ -22,6 +23,9 @@ export class StartMenu extends Container implements IUpdateable{
         super();
 
         
+        const BGMM = sound.find ("MusicStart1");
+        BGMM.play({volume:0.05, singleInstance:true, loop:true});
+
         //  CARTEL:                 AGREGANDO EL CARTEL A LA PANTALLA
         this.cartel = new Cartel();
         this.cartel.position.set(455, 260);
@@ -74,13 +78,12 @@ export class StartMenu extends Container implements IUpdateable{
             }
 
             this.buttonSound = new ToggleButton(
-                Texture.from("MusicOff"),
-                Texture.from("MusicOn"));
+                Texture.from("MusicOn"),
+                Texture.from("MusicOff"));
             this.buttonSound.height = 55;
             this.buttonSound.width = 55;
             this.buttonSound.x = this.cartel.width + 385
             this.buttonSound.y = this.cartel.height + 85
-            this.buttonSound.on("buttonClick", this.onButtonClick, this);
             this.buttonSound.on(ToggleButton.TOGGLE_EVENT, (newState) => {
                 console.log("toggle changed to:", newState)
             })
@@ -128,6 +131,7 @@ export class StartMenu extends Container implements IUpdateable{
     //BUTTON.TS            HACER FUNCIONAR EL NUEVO BOTÓN  
     private onButtonClick(): void {
         console.log("Apreté start", this);
+        sound.stop("MusicStart1");
         ChangeScene(new TickerScene());
     }
     private onButtonClickConfig(): void {

@@ -1,4 +1,4 @@
-import { Sprite, Texture } from "pixi.js";
+import { NineSlicePlane, Sprite, Texture } from "pixi.js";
 // import { Cartel } from "../scenes/Cartel";
 import { PhysicsContainer } from "./PhysicsContainer";
 
@@ -15,17 +15,23 @@ export class HealthBar extends PhysicsContainer {
     constructor() {
         super();
 
+        const marco1 = new NineSlicePlane(Texture.from("Marco"),
+            35, 35, 35, 35
+        );
+        marco1.scale.set(0.5, 1);
+        this.addChild(marco1);
+
         this.LowHth = new Sprite(Texture.from("LowHth"));
         this.LowHth.scale.set(0.5,1)
-        this.LowHth.position.set(10, 10)
+        this.LowHth.position.set(13, 12)
         this.LowHth.visible = false;
 
         this.MidHth = new Sprite(Texture.from("MidHth"));
-        this.MidHth.position.set(10, 10)
+        this.MidHth.position.set(13, 12)
         this.MidHth.visible = false;
 
         this.FullHth = new Sprite(Texture.from("FullHth"));
-        this.FullHth.position.set(10, 10)
+        this.FullHth.position.set(13, 12)
         this.FullHth.visible = true;
         
         this.addChild(
@@ -56,7 +62,17 @@ export class HealthBar extends PhysicsContainer {
 
         }
     }
-    
+    public getRealDamage(){
+        if(this.canReallyHurt) {
+            console.log("quede al horno");
+            this.LowHth.visible =true;
+            this.MidHth.visible =false;
+            this.FullHth.visible=false;
+            this.canReallyHurt=false;
+        }
+    }
+
+    // ESTADOS DE VIDA
     public FullHealth(){
         this.FullHth.visible=true;
         this.MidHth.visible=false;
@@ -74,13 +90,4 @@ export class HealthBar extends PhysicsContainer {
         this.LowHth.visible=true;
     }
 
-    public getRealDamage(){
-        if(this.canReallyHurt) {
-            console.log("quede al horno");
-            this.LowHth.visible =true;
-            this.MidHth.visible =false;
-            this.FullHth.visible=false;
-            this.canReallyHurt=false;
-        }
-    }
 }

@@ -23,6 +23,7 @@ export const assets = [
     {url: "./StageOne/B3.png", name:"B3"},
     {url: "./StageOne/B4.png", name:"B4"},
     {url: "./StageOne/B5.png", name:"B5"},
+    {url: "./StageOne/B6.png", name:"B6"},
     
     {url: "./uipack_fixed/Spritesheet/blueSheet.xml", name:"lala"},
 
@@ -52,4 +53,16 @@ export const assets = [
     {url: "./StageOne/LowHth.png", name:"LowHth"},
     {url: "./StageOne/MidHth.png", name:"MidHth"},
     {url: "./StageOne/FullHth.png", name:"FullHth"},
+
+    // MUSIQUITA
+    {url: "./StageOne/Musica/stage1.mp3", name: "Music1",},
+    {url: "./StageOne/Musica/start.mp3", name: "MusicStart1",},
+
+    //MAP
+    { url: "./Map1.jpg", name: "Map1" },
+
+    //joystick
+    { url: "./joystick.png", name: "outer" },
+    { url: "./joystick-handle.png", name: "inner" },
+
 ]

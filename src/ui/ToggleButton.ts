@@ -1,3 +1,4 @@
+import { sound } from "@pixi/sound";
 import { Container, Texture } from "pixi.js";
 import { Button } from "./Button";
 
@@ -30,6 +31,7 @@ export class ToggleButton extends Container{
     public toggle(){
         this.state = !this.state;
         this.emit(ToggleButton.TOGGLE_EVENT, this.state);
+        sound.toggleMuteAll();
     }
 
     private fixState() {

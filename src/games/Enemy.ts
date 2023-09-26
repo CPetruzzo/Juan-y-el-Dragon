@@ -52,7 +52,7 @@ export class Enemy extends PhysicsContainer implements IHitBox {
             this.addChild(this.hitbox)
 
             this.acceleration.y= Enemy.GRAVITY;
-            Keyboard.down.on("ArrowUp",this.jump,this)
+            Keyboard.down.on("KeyW",this.jump,this)
 
             // // agrego todos los movimientos a la clase Enemy
             this.addChild(
@@ -63,7 +63,7 @@ export class Enemy extends PhysicsContainer implements IHitBox {
     // ESTO ES PARA QUE CUANDO DESTRUYA EL Enemy TAMBIÉN SE BORRE EL MÉTODO DE SALTAR KEYBOARD DOWN ARROW UP ----> THIS.JUMP
     public override destroy(options: boolean | IDestroyOptions | undefined){
         super.destroy(options);
-        Keyboard.down.off("ArrowUp",this.jump);
+        Keyboard.down.off("KeyW",this.jump);
     }
 
     //  MOVIMIENTOS
